@@ -3,13 +3,14 @@ import Signup from "../pages/Signup";
 const { BrowserRouter, Routes, Route } = require("react-router-dom");
 
 const Router = () => {
+  const i = 0;
   return (
     <BrowserRouter>
       <Routes>
-        <Route path=`${process.env.REACT_APP_BASEURL}/users/signup` element={<Signup/>} />
+        <Route path="/singup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-export default Router
+export default Router;
