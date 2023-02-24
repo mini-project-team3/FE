@@ -1,13 +1,12 @@
-import Signup from "../pages/Signup";
+import Signin from "../pages/Signin";
 
 const { BrowserRouter, Routes, Route } = require("react-router-dom");
 
 const Router = () => {
-  const i = 0;
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/singup" element={<Signup />} />
+        <Route path="/singin" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
