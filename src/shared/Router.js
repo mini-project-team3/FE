@@ -1,4 +1,4 @@
-import Signin from "../pages/Signin";
+import Signin from "../pages/MainHome";
 
 const { BrowserRouter, Routes, Route } = require("react-router-dom");
 
@@ -6,7 +6,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/singin" element={<Signin />} />
+        <Route path="/" element={<Signin />} />
       </Routes>
     </BrowserRouter>
   );
