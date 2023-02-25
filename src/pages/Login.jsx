@@ -3,8 +3,11 @@ import axios from "axios";
 import { Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const onLogin = (loginId, password) => {
     const data = {
       loginId,
@@ -33,7 +36,9 @@ const Login = () => {
     onLogin(loginId.value, password.value);
   };
 
-  const goToSignupPage = () => {};
+  const goToSignupPage = () => {
+    navigate("/signup");
+  };
 
   return (
     <Container
@@ -41,7 +46,7 @@ const Login = () => {
     >
       <div>타이틀 : 로그인</div>
       <Form onSubmit={onLoginHandler}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3">
           <Form.Label>아이디</Form.Label>
           <Form.Control
             type="text"
@@ -50,7 +55,7 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3">
           <Form.Label>비밀번호</Form.Label>
           <Form.Control
             type="password"
@@ -58,7 +63,7 @@ const Login = () => {
             name="password"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Group className="mb-3">
           <Form.Check type="checkbox" label="로그인 정보 저장" />
         </Form.Group>
         <Button type="submit" style={{ backgroundColor: "gray" }}>
