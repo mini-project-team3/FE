@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Container } from "react-bootstrap";
 import Button from "../style/signinOrUp/Button";
-import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../style/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/modules/loginSlice";
 
 const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onLogin = () => {
     const data = {
@@ -27,6 +28,8 @@ const Login = () => {
         ] = `Bearer ${accessToken}`;
 
         // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+
+        dispatch(login());
         navigate("/");
       })
       .catch((error) => {
