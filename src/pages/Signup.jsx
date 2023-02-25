@@ -34,6 +34,9 @@ const Signup = () => {
   if (isError) {
     return <LoadingSpinner></LoadingSpinner>;
   }
+  if (isSuccess) {
+    navigate("/login");
+  }
 
   return (
     <Container
