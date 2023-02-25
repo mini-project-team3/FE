@@ -1,18 +1,54 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import "./App.css";
+import { useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import RivewCard from "./components/RivewCard";
+import { IoBulbOutline } from "react-icons/io5";
 
-// import Router from "./shared/Router";
+const queryClient = new QueryClient();
 
-function App() {
-  const queryClient = new QueryClient();
+const AppWrapper = styled.div`
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.color};
+  transition: all 0.5s linear;
+`;
+
+const LargeIoBulbOutline = styled(IoBulbOutline)`
+  font-size: 5em;
+  justify-content: flex-end;
+`;
+
+const App = () => {
+  const [themeMode, setThemeMode] = useState("light");
+
+  const toggleTheme = () => {
+    setThemeMode(themeMode === "light" ? "dark" : "light");
+  };
+
+  const theme = {
+    light: {
+      background: "#ffffff",
+      color: "#000000",
+    },
+    dark: {
+      background: "#333333",
+      color: "#ffffff",
+    },
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      <RivewCard />
+      <ThemeProvider theme={theme[themeMode]}>
+        <AppWrapper>
+          <LargeIoBulbOutline onClick={toggleTheme}>
+            {themeMode === "light" ? "Dark Mode" : "Light Mode"}
+          </LargeIoBulbOutline>
+          <Header />
+          <RivewCard />
+        </AppWrapper>
+      </ThemeProvider>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
