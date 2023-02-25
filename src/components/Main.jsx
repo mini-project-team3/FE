@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 // import Button from "react-bootstrap/Button";
 import { TbArrowsDownUp } from "react-icons/tb";
 
-function ReviewCards() {
+function Main() {
   const [reviews, setReviews] = useState([
     {
       title: "리뷰제목1",
@@ -46,4 +46,4 @@ function ReviewCards() {
   );
 }
 
-export default ReviewCards;
+export default Main;

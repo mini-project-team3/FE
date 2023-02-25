@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
-import RivewCard from "./components/RivewCard";
+import Main from "./components/Main";
 import { IoBulbOutline } from "react-icons/io5";
 
 const queryClient = new QueryClient();
@@ -21,9 +21,9 @@ const LargeIoBulbOutline = styled(IoBulbOutline)`
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setThemeMode(themeMode === "light" ? "dark" : "light");
-  };
+  }, [themeMode]);
 
   const theme = {
     light: {
@@ -31,7 +31,7 @@ const App = () => {
       color: "#000000",
     },
     dark: {
-      background: "#333333",
+      background: "#333",
       color: "#ffffff",
     },
   };
@@ -44,7 +44,7 @@ const App = () => {
             {themeMode === "light" ? "Dark Mode" : "Light Mode"}
           </LargeIoBulbOutline>
           <Header />
-          <RivewCard />
+          <Main />
         </AppWrapper>
       </ThemeProvider>
     </QueryClientProvider>

@@ -9,23 +9,30 @@ import styled from "styled-components";
 //스타일 컴포넌트
 const StyledNavDropdown = styled(NavDropdown)`
   .dropdown-toggle {
-    text-align: center; /* 드롭다운 토글 중앙 정렬 */
-    width: 1115%; //아니 이거어카지...
+    text-align: center;
+    width: 1115%;
+    color: ${({ theme }) => theme.color}; // Toggle text color based on theme mode
   }
   .dropdown-menu {
-    position: absolute; /* 드롭다운 메뉴 위치 고정 */
-    left: 600%; /* 드롭다운 메뉴 정렬 */
+    position: absolute;
+    left: 600%;
     transform: translateX(-50%);
   }
 `;
+
 const Icon = styled.div`
   font-size: 1.2em;
+  color: ${({ theme }) => theme.color}; // 테마 모드에 따른 글자 색상 적용
 `;
 
 const Stylednav = styled(Navbar)`
   /* background-color: black; */
   height: 70px;
   margin-bottom: 60px;
+
+  .navbar-toggler {
+    border-color: ${({ theme }) => theme.color}; // 테마 모드에 따른 버튼 색상 적용
+  }
 `;
 
 //컴포함수시작
