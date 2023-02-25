@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Container } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import Button from "../style/signinOrUp/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../style/LoadingSpinner";
 
 const Login = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const onLogin = (loginId, password) => {
+  const onLogin = () => {
     const data = {
-      loginId,
+      loginId: id,
       password,
     };
     axios
@@ -24,16 +27,11 @@ const Login = () => {
         ] = `Bearer ${accessToken}`;
 
         // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+        navigate("/");
       })
       .catch((error) => {
         alert(error);
       });
-  };
-
-  const onLoginHandler = (e) => {
-    e.preventDefault();
-    const { loginId, password } = e.target;
-    onLogin(loginId.value, password.value);
   };
 
   const goToSignupPage = () => {
@@ -45,31 +43,25 @@ const Login = () => {
       style={{ marginTop: "20vh", width: "50vw", textAlign: "center" }}
     >
       <div>타이틀 : 로그인</div>
-      <Form onSubmit={onLoginHandler}>
-        <Form.Group className="mb-3">
-          <Form.Label>아이디</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="아이디를 입력해주세요"
-            name="loginId"
-          />
-        </Form.Group>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onLogin();
+        }}
+      >
+        <label>아이디</label>
+        <input type="text" placeholder="아이디를 입력해주세요" name="loginId" />
 
-        <Form.Group className="mb-3">
-          <Form.Label>비밀번호</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            name="password"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Check type="checkbox" label="로그인 정보 저장" />
-        </Form.Group>
+        <label>비밀번호</label>
+        <input
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          name="password"
+        />
         <Button type="submit" style={{ backgroundColor: "gray" }}>
           로그인하기
         </Button>
-      </Form>
+      </form>
 
       <Button
         type="submit"
