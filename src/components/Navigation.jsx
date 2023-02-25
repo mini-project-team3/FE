@@ -22,6 +22,12 @@ const Icon = styled.div`
   font-size: 1.2em;
 `;
 
+const Stylednav = styled(Navbar)`
+  /* background-color: black; */
+  height: 70px;
+  margin-bottom: 60px;
+`;
+
 //컴포함수시작
 function Navigation() {
   const dropdownItems = [
@@ -41,7 +47,7 @@ function Navigation() {
   ));
 
   return (
-    <Navbar>
+    <Stylednav>
       <Container>
         <Navbar.Toggle />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
@@ -64,7 +70,7 @@ function Navigation() {
           </Nav>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Stylednav>
   );
 }
 export default Navigation;
