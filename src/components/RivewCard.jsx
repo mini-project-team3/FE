@@ -1,7 +1,10 @@
+import { useState } from "react";
 import Card from "react-bootstrap/Card";
+// import Button from "react-bootstrap/Button";
+import { TbArrowsDownUp } from "react-icons/tb";
 
 function ReviewCards() {
-  const reviews = [
+  const [reviews, setReviews] = useState([
     {
       title: "리뷰제목1",
       content: "팀장님 너무해1",
@@ -14,10 +17,16 @@ function ReviewCards() {
       title: "리뷰제목3",
       content: "팀장님 너무해3",
     },
-  ];
+  ]);
+
+  const handleSort = () => {
+    setReviews([...reviews].reverse());
+  };
 
   return (
     <div className="d-flex flex-column align-items-center">
+      <TbArrowsDownUp style={{ fontSize: "40px", cursor: "pointer" }} variant="dark" onClick={handleSort} />
+      <br />
       {reviews.map((review, id) => (
         <Card
           key={id}
