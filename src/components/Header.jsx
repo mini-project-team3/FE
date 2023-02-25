@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Nav2 from "./Nav2";
 import Navigation from "./Navigation";
 
 // 스타일을 적용할 컴포넌트를 생성합니다.
@@ -25,6 +26,7 @@ const Header = () => {
     <>
       <StyledHeader />
       <Navigation />
+      {/* <Nav2 /> */}
     </>
   );
 };

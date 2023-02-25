@@ -10,7 +10,7 @@ import styled from "styled-components";
 const StyledNavDropdown = styled(NavDropdown)`
   .dropdown-toggle {
     text-align: center; /* 드롭다운 토글 중앙 정렬 */
-    width: 1115%;
+    width: 1115%; //아니 이거어카지...
   }
   .dropdown-menu {
     position: absolute; /* 드롭다운 메뉴 위치 고정 */
