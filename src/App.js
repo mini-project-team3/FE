@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import { IoBulbOutline } from "react-icons/io5";
+import Bgm from "./components/Bgm";
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,7 @@ const AppWrapper = styled.div`
 `;
 
 const LargeIoBulbOutline = styled(IoBulbOutline)`
-  font-size: 5em;
+  font-size: 4em;
   justify-content: flex-end;
 `;
 
@@ -43,6 +44,7 @@ const App = () => {
           <LargeIoBulbOutline onClick={toggleTheme}>
             {themeMode === "light" ? "Dark Mode" : "Light Mode"}
           </LargeIoBulbOutline>
+          <Bgm />
           <Header />
           <Main />
         </AppWrapper>

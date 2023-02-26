@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Bgm from "./Bgm";
 import Nav2 from "./Nav2";
 import Navigation from "./Navigation";
 
@@ -24,7 +25,8 @@ const StyledHeader = styled.header`
 const Header = () => {
   return (
     <>
-      <StyledHeader />
+      <StyledHeader></StyledHeader>
+      {/* <Bgm /> */}
       <Navigation />
       {/* <Nav2 /> */}
     </>
