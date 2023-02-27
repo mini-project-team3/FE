@@ -57,3 +57,32 @@ export const loginUser = async (credentials) => {
     return statusError;
   }
 };
+
+export const logoutUser = async (refreshToken) => {
+  const option = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({ refresh_token: refreshToken }),
+  };
+
+  const data = await getPromise("/login-url", option).catch(() => {
+    return statusError;
+  });
+
+  if (parseInt(Number(data.status) / 100) === 2) {
+    const status = data.ok;
+    const code = data.status;
+    const text = await data.text();
+    const json = text.length ? JSON.parse(text) : "";
+
+    return {
+      status,
+      code,
+      json,
+    };
+  } else {
+    return statusError;
+  }
+};
