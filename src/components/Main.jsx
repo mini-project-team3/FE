@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { getRivews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 
+// 팀장님 여깁뉘다!!!!!!!!!!!!!!!!!!
 
 function Main() {
   const navigate = useNavigate();
+
   const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
 
   if (isLoading) {
@@ -18,11 +20,10 @@ function Main() {
 
   if (isError) {
     return console.log("errorㅠㅠㅠㅠㅠㅠ", error);
-
-
+  }
 
   const handleSort = () => {
-    setReviews([...reviews].reverse());
+    data.reverse();
   };
 
   const goToDetailPage = (id) => {
