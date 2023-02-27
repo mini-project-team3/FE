@@ -4,6 +4,7 @@ import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import { IoBulbOutline } from "react-icons/io5";
+import Router from "./shared/Router";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +45,7 @@ const App = () => {
             {themeMode === "light" ? "Dark Mode" : "Light Mode"}
           </LargeIoBulbOutline>
           <Header />
-          <Main />
+          <Router />
         </AppWrapper>
       </ThemeProvider>
     </QueryClientProvider>

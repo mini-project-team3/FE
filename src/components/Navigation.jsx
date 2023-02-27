@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { SlPencil } from "react-icons/sl";
 import { SlUser } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 //스타일 컴포넌트
@@ -11,7 +12,8 @@ const StyledNavDropdown = styled(NavDropdown)`
   .dropdown-toggle {
     text-align: center;
     width: 1115%;
-    color: ${({ theme }) => theme.color}; // Toggle text color based on theme mode
+    color: ${({ theme }) =>
+      theme.color}; // Toggle text color based on theme mode
   }
   .dropdown-menu {
     position: absolute;
@@ -31,7 +33,8 @@ const Stylednav = styled(Navbar)`
   margin-bottom: 60px;
 
   .navbar-toggler {
-    border-color: ${({ theme }) => theme.color}; // 테마 모드에 따른 버튼 색상 적용
+    border-color: ${({ theme }) =>
+      theme.color}; // 테마 모드에 따른 버튼 색상 적용
   }
 `;
 
@@ -53,23 +56,34 @@ function Navigation() {
     </NavDropdown.Item>
   ));
 
+  const navigate = useNavigate();
+  const moveToReviewPage = () => {
+    navigate("/review");
+  };
+
+  const moveToMyPage = () => {
+    navigate("/mypage");
+  };
   return (
     <Stylednav>
       <Container>
         <Navbar.Toggle />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="justify-content-between"
+        >
           <Nav>
             <StyledNavDropdown title="Kategorie" id="basic-nav-dropdown">
               {dropdownMenu}
             </StyledNavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link>
+            <Nav.Link onClick={moveToReviewPage}>
               <Icon>
                 <SlPencil />
               </Icon>
             </Nav.Link>
-            <Nav.Link>
+            <Nav.Link onClick={moveToMyPage}>
               <Icon>
                 <SlUser />
               </Icon>
