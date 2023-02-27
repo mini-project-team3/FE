@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ReviewCard from "../components/ReviewCard";
 import LoadingSpinner from "../style/LoadingSpinner";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("TIME");
-  const isLogin = useSelector((state) => {
-    return state.loginSlice.isLogin;
+  const isAuthenticated = useSelector((state) => {
+    return state.authToken.authenticated;
   });
+  console.log(isAuthenticated);
   useEffect(() => {
     // if (!isLogin) {
     //   navigate("/login");
@@ -56,14 +58,7 @@ const MyPage = () => {
       <Container>
         {navArea}
         {data?.data.map((item) => (
-          <div key={item.id}>
-            <div>TIME</div>
-            <div>제목 : {item.title}</div>
-            <div>닉네임 : {item.nickname}</div>
-            <div>좋아요 수 : {item.likeCount}</div>
-            <div>작성일자 : {item.createdAt}</div>
-            <br />
-          </div>
+          <ReviewCard key={item.id} />
         ))}
       </Container>
     );
@@ -72,13 +67,7 @@ const MyPage = () => {
       <Container>
         {navArea}
         {data?.data.map((item) => (
-          <div key={item.id}>
-            <div>LIKES</div>
-            <div>제목 : {item.title}</div>
-            <div>닉네임 : {item.nickname}</div>
-            <div>좋아요 수 : {item.likeCount}</div>
-            <div>작성일자 : {item.createdAt}</div>
-          </div>
+          <ReviewCard key={item.id} />
         ))}
       </Container>
     );
