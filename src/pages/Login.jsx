@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/modules/loginSlice";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../api/Users";
+import { setRefreshToken } from "../storage/Cookie";
+import { SET_TOKEN } from "../redux/modules/Auth";
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -20,8 +23,26 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, isDirty, errors },
+    formState: { isSubmitting, isDirty, errors, setValue },
   } = useForm();
+
+  const onValid = async ({ userId, password }) => {
+    // input 태그 값 비워주는 코드
+    setValue("password", "");
+
+    // 백으로부터 받은 응답
+    const response = await loginUser({ userId, password });
+
+    if (response.status) {
+      // 쿠키에 Refresh Token, store에 Access Token 저장
+      setRefreshToken(response.json.refresh_token);
+      dispatch(SET_TOKEN(response.json.access_token));
+
+      return navigate("/");
+    } else {
+      console.log(response.json);
+    }
+  };
 
   return (
     <Container
@@ -32,6 +53,7 @@ const Login = () => {
         onSubmit={handleSubmit(async (data) => {
           await new Promise((r) => setTimeout(r, 1000));
           alert(JSON.stringify(data));
+          onValid();
         })}
       >
         <label>아이디</label>
