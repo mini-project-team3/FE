@@ -16,7 +16,7 @@ const Signup = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const { mutate, isLoading, isError, error, isSuccess } = useMutation(
     (newUser) => {
-      return axios.post("/api/users/signup", newUser);
+      return axios.post("http://localhost:5000/users", newUser);
     }
   );
 

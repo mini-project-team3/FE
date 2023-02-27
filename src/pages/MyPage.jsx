@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,17 +16,15 @@ const MyPage = () => {
     // if (!isLogin) {
     //   navigate("/login");
     // }
-  }, [sortBy]);
+  }, []);
 
   const { isLoading, isError, error, data, refetch } = useQuery(
     ["getMyReviews"],
     () => {
       if (sortBy === "TIME") {
-        return axios.get("/api/myreviews?page=0&criteria=createdAt&sort=DESC");
+        return axios.get("http://localhost:5000/reviewList");
       } else if (sortBy === "LIKES") {
-        return axios.get(
-          "/api/reviews/likes?page=0&criteria=createdAt&sort=DESC"
-        );
+        return axios.get("http://localhost:5000/reviewList");
       }
     }
   );
@@ -36,41 +35,52 @@ const MyPage = () => {
   if (isError) {
     console.log(error);
   }
-  const reviewList = data.data.reviewList;
 
-  const navArea = `<div>Title: mypage</div>
-    <div onClick={${setSortBy("TIME")}; ${refetch()};}>내가 쓴 글</div>
-    <div onClick={${setSortBy(
-      "LIKES"
-    )}; ${refetch()};}>내가 좋아요 누른 글</div>`;
+  const reSort = (criteria) => {
+    if (criteria !== sortBy) {
+      setSortBy(criteria);
+      refetch();
+    }
+  };
+
+  const navArea = (
+    <div>
+      <button onClick={() => reSort("TIME")}>최신 순</button>
+      <button onClick={() => reSort("LIKES")}>좋아요 순</button>
+      <br />
+    </div>
+  );
 
   if (sortBy === "TIME") {
     return (
-      <div>
+      <Container>
         {navArea}
-        {reviewList?.map((item) => (
-          <div onClick={navigate("상세페이지로")}>
-            <div>{item.title}</div>
-            <div>{item.nickname}</div>
-            <div>{item.likeCount}</div>
-            <div>{item.createdAt}</div>
+        {data?.data.map((item) => (
+          <div key={item.id}>
+            <div>TIME</div>
+            <div>제목 : {item.title}</div>
+            <div>닉네임 : {item.nickname}</div>
+            <div>좋아요 수 : {item.likeCount}</div>
+            <div>작성일자 : {item.createdAt}</div>
+            <br />
           </div>
         ))}
-      </div>
+      </Container>
     );
   } else if (sortBy === "LIKES") {
     return (
-      <div onClick={navigate("상세페이지로")}>
+      <Container>
         {navArea}
-        {reviewList?.map((item) => (
-          <div>
-            <div>{item.title}</div>
-            <div>{item.nickname}</div>
-            <div>{item.likeCount}</div>
-            <div>{item.createdAt}</div>
+        {data?.data.map((item) => (
+          <div key={item.id}>
+            <div>LIKES</div>
+            <div>제목 : {item.title}</div>
+            <div>닉네임 : {item.nickname}</div>
+            <div>좋아요 수 : {item.likeCount}</div>
+            <div>작성일자 : {item.createdAt}</div>
           </div>
         ))}
-      </div>
+      </Container>
     );
   }
 };

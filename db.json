@@ -1,0 +1,61 @@
+{
+  "reviewList": [
+    {
+      "id": 1,
+      "title": "첫 메모 제목",
+      "nickname": "user1",
+      "createdAt": "생성일시",
+      "likeCount": 1
+    },
+    {
+      "id": 2,
+      "title": "두 메모 제목",
+      "nickname": "user2",
+      "createdAt": "생성일시",
+      "likeCount": 11
+    },
+    {
+      "id": 3,
+      "title": "세 메모 제목",
+      "nickname": "user3",
+      "createdAt": "생성일시",
+      "likeCount": 4
+    },
+    {
+      "id": 4,
+      "title": "넷 메모 제목",
+      "nickname": "user4",
+      "createdAt": "생성일시",
+      "likeCount": 6
+    }
+  ],
+  "users": [
+    {
+      "id": 2,
+      "userId": "aaa",
+      "password": "11",
+      "nickname": "bbb"
+    },
+    {
+      "userId": "id",
+      "password": "11",
+      "nickname": "nick",
+      "id": 3
+    },
+    {
+      "loginId": "",
+      "password": "",
+      "id": 4
+    },
+    {
+      "loginId": "",
+      "password": "",
+      "id": 5
+    },
+    {
+      "loginId": "",
+      "password": "",
+      "id": 6
+    }
+  ]
+}
