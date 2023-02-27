@@ -5,7 +5,7 @@ import Bgm from "./Bgm";
 
 const StyledHeader = styled.header`
   background-color: #ffffff;
-  padding: 10px;
+  padding: 20px;
   height: 400px;
   background-repeat: no-repeat;
   background-position: top;
