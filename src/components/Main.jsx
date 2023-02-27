@@ -2,11 +2,9 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 // import Button from "react-bootstrap/Button";
 import { TbArrowsDownUp } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
+import ReviewCard from "./ReviewCard";
 
 function Main() {
-  const navigate = useNavigate();
-
   const [reviews, setReviews] = useState([
     {
       title: "리뷰제목1",
@@ -26,10 +24,6 @@ function Main() {
     setReviews([...reviews].reverse());
   };
 
-  const goToDetailPage = (id) => {
-    navigate(`/detail/${id}`);
-  };
-
   return (
     <div className="d-flex flex-column align-items-center">
       <TbArrowsDownUp
@@ -39,20 +33,7 @@ function Main() {
       />
       <br />
       {reviews.map((review, id) => (
-        <Card
-          key={id}
-          bg="dark"
-          text="white"
-          style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
-          className="my-2"
-          onClick={(id) => goToDetailPage(id)}
-        >
-          <Card.Header>{review.title}</Card.Header>
-          <Card.Body>
-            <Card.Title>샬라샬라</Card.Title>
-            <Card.Text>{review.content}</Card.Text>
-          </Card.Body>
-        </Card>
+        <ReviewCard key={id} review={review} id={id} />
       ))}
     </div>
   );
