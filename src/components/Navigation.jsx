@@ -12,7 +12,7 @@ const StyledNavDropdown = styled(NavDropdown)`
   .dropdown-toggle {
     text-align: center;
     width: 1115%;
-    color: ${({ theme }) => theme.color}; // Toggle text color based on theme mode
+    color: ${({ theme }) => theme.color};
   }
   .dropdown-menu {
     position: absolute;
