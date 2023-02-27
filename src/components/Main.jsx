@@ -32,7 +32,11 @@ function Main() {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <TbArrowsDownUp style={{ fontSize: "40px", cursor: "pointer" }} variant="dark" onClick={handleSort} />
+      <TbArrowsDownUp
+        style={{ fontSize: "40px", cursor: "pointer" }}
+        variant="dark"
+        onClick={handleSort}
+      />
       <br />
       {data.map((review, id) => (
         <Card
