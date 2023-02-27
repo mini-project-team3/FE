@@ -38,7 +38,7 @@ export const loginUser = async (credentials) => {
     body: JSON.stringify(credentials),
   };
 
-  const data = await getPromise("/login-url", option).catch(() => {
+  const data = await getPromise("/api/users/login", option).catch(() => {
     return statusError;
   });
 
