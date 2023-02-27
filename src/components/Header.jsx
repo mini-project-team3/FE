@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Nav2 from "./Nav2";
 import Navigation from "./Navigation";
+import Bgm from "./Bgm";
 
 // 스타일을 적용할 컴포넌트를 생성합니다.
 const StyledHeader = styled.header`
@@ -24,7 +24,9 @@ const StyledHeader = styled.header`
 const Header = () => {
   return (
     <>
+      <Bgm />
       <StyledHeader />
+
       <Navigation />
       {/* <Nav2 /> */}
     </>
