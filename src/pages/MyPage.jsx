@@ -1,21 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { useQuery } from "react-query";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ReviewCard from "../components/ReviewCard";
 import LoadingSpinner from "../style/LoadingSpinner";
+import { getCookieToken, removeCookieToken } from "../storage/Cookie";
+import { DELETE_TOKEN } from "../redux/modules/Auth";
+import { logoutUser } from "../api/Users";
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("TIME");
-  const isLogin = useSelector((state) => {
-    return state.loginSlice.isLogin;
+  const isAuthenticated = useSelector((state) => {
+    return state.authToken.authenticated;
   });
   useEffect(() => {
-    // if (!isLogin) {
-    //   navigate("/login");
-    // }
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
   }, []);
 
   const { isLoading, isError, error, data, refetch } = useQuery(
@@ -43,8 +47,38 @@ const MyPage = () => {
     }
   };
 
+  const Logout = () => {
+    // store에 저장된 Access Token 정보를 받아 온다
+    const { accessToken } = useSelector((state) => state.token);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // Cookie에 저장된 Refresh Token 정보를 받아 온다
+    const refreshToken = getCookieToken();
+
+    const logout = async () => {
+      // 백으로부터 받은 응답
+      const data = await logoutUser(
+        { refresh_token: refreshToken },
+        accessToken
+      );
+
+      if (data.status) {
+        // store에 저장된 Access Token 정보를 삭제
+        dispatch(DELETE_TOKEN());
+        // Cookie에 저장된 Refresh Token 정보를 삭제
+        removeCookieToken();
+        return navigate("/");
+      } else {
+        window.location.reload();
+      }
+    };
+  };
+
   const navArea = (
     <div>
+      <button onClick={Logout}>로그아웃</button>
       <button onClick={() => reSort("TIME")}>최신 순</button>
       <button onClick={() => reSort("LIKES")}>좋아요 순</button>
       <br />
@@ -56,14 +90,7 @@ const MyPage = () => {
       <Container>
         {navArea}
         {data?.data.map((item) => (
-          <div key={item.id}>
-            <div>TIME</div>
-            <div>제목 : {item.title}</div>
-            <div>닉네임 : {item.nickname}</div>
-            <div>좋아요 수 : {item.likeCount}</div>
-            <div>작성일자 : {item.createdAt}</div>
-            <br />
-          </div>
+          <ReviewCard key={item.id} />
         ))}
       </Container>
     );
@@ -72,13 +99,7 @@ const MyPage = () => {
       <Container>
         {navArea}
         {data?.data.map((item) => (
-          <div key={item.id}>
-            <div>LIKES</div>
-            <div>제목 : {item.title}</div>
-            <div>닉네임 : {item.nickname}</div>
-            <div>좋아요 수 : {item.likeCount}</div>
-            <div>작성일자 : {item.createdAt}</div>
-          </div>
+          <ReviewCard key={item.id} />
         ))}
       </Container>
     );
