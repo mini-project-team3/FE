@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Navigation from "./Navigation";
-import Bgm from "./Bgm";
 
 const StyledHeader = styled.header`
   background-color: #ffffff;
@@ -26,7 +25,6 @@ const HeaderLink = styled.a`
 const Header = () => {
   return (
     <>
-      <Bgm />
       <StyledHeader>
         <HeaderLink href="/" />
       </StyledHeader>

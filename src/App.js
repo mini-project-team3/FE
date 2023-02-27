@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import { IoBulbOutline } from "react-icons/io5";
 import Router from "./shared/Router";
+import Bgm from "./components/Bgm";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => {
           <LargeIoBulbOutline onClick={toggleTheme}>
             {themeMode === "light" ? "Dark Mode" : "Light Mode"}
           </LargeIoBulbOutline>
+          <Bgm />
           <Header />
           <Router />
         </AppWrapper>
