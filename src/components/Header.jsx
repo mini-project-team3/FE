@@ -26,9 +26,7 @@ const Header = () => {
     <>
       <Bgm />
       <StyledHeader />
-
       <Navigation />
-      {/* <Nav2 /> */}
     </>
   );
 };
