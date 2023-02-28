@@ -14,7 +14,8 @@ function Main() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
-  const reviewList = data.data;
+  //이 코드는 "data" 변수가 존재하면 "data" 변수의 "data" 속성값을 반환하고, "data" 변수가 존재하지 않으면 false를 반환합니다.
+  const reviewList = data && data.data;
   // console.log("이data는뭘까", data);
 
   if (isLoading) {
@@ -26,7 +27,9 @@ function Main() {
   }
 
   const handleSort = () => {
-    data.reverse();
+    if (reviewList) {
+      reviewList.sort((a, b) => b.id - a.id);
+    }
   };
 
   const goToDetailPage = (id) => {
