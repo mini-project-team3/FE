@@ -15,7 +15,7 @@ const MyPage = () => {
     ["getMyReviews"],
     () => {
       if (sortBy === "TIME") {
-        return axios.get("http://localhost:5000/reviewList");
+        return axios.get(`${process.env.REACT_APP_BASEURL}/myreviews`);
       } else if (sortBy === "LIKES") {
         return axios.get("http://localhost:5000/reviewList");
       }
