@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../App.css";
+import styled from "styled-components";
+
+//styled-components
+
+const ReviewCardSt = styled.div`
+  background-color: #eabdcf;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+`;
 
 const Review = () => {
   const [title, setTitle] = useState("");
@@ -18,11 +28,11 @@ const Review = () => {
   const categoryList = ["인문", "사회", "과학", "문학", "예술", "가정", "어린이"];
 
   return (
-    <div className="layout">
+    <ReviewCardSt>
       <h4>리뷰 작성</h4>
       {categoryList.map((item, i) => {
         return (
-          <div key={i} className="category">
+          <ReviewCardSt key={i} className="category">
             {item}
             <input
               type="checkbox"
@@ -32,7 +42,7 @@ const Review = () => {
                 // console.log({category})
               }}
             />
-          </div>
+          </ReviewCardSt>
         );
       })}
 
@@ -85,7 +95,7 @@ const Review = () => {
       >
         등록하기
       </button>
-    </div>
+    </ReviewCardSt>
   );
 };
 
