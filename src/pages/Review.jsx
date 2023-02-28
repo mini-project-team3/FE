@@ -16,6 +16,8 @@ const Review = () => {
     "어린이",
   ];
 
+  const onSubmitHandler = () => {};
+
   return (
     <div>
       <h4>리뷰작성 페이지</h4>

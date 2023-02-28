@@ -4,9 +4,7 @@ import Button from "../style/signinOrUp/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../api/Users";
-import { setRefreshToken } from "../storage/Cookie";
-import { SET_TOKEN } from "../redux/modules/Auth";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,22 +22,17 @@ const Login = () => {
     isSubmitting,
   } = useForm();
 
-  const onValid = async ({ userId, password }) => {
-    // input 태그 값 비워주는 코드
-    setValue("password", "");
-
-    // 백으로부터 받은 응답
-    const response = await loginUser({ userId, password });
-
-    if (response.status) {
-      // 쿠키에 Refresh Token, store에 Access Token 저장
-      setRefreshToken(response.json.refresh_token);
-      dispatch(SET_TOKEN(response.json.access_token));
-
-      return navigate("/");
-    } else {
-      console.log(response.json);
-    }
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const data = {
+      loginId: "yshong2006",
+      password: "123asdASD!@#",
+    };
+    const res = await axios.post(
+      "http://13.113.67.140:8080/api/users/login",
+      data
+    );
+    console.log("res : ", res);
   };
 
   return (
@@ -47,13 +40,7 @@ const Login = () => {
       style={{ marginTop: "20vh", width: "50vw", textAlign: "center" }}
     >
       <div>타이틀 : 로그인</div>
-      <form
-        onSubmit={handleSubmit(async (data) => {
-          await new Promise((r) => setTimeout(r, 1000));
-          alert(JSON.stringify(data));
-          onValid(data);
-        })}
-      >
+      <form onSubmit={(e) => onSubmitHandler(e)}>
         <label>아이디</label>
         <input
           type="text"
