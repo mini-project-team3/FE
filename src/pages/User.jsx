@@ -72,33 +72,25 @@ const User = () => {
           className="signup"
         >
           <h2 className="form-title" id="signup">
-            <span>or</span>회원가입
+            <span>or</span>로그인
           </h2>
           <div className="form-holder">
             <input
               type="text"
               className="input"
               placeholder="아이디"
-              name="loginId"
-              {...register("signupLoginId")}
+              {...register("loginLoginId")}
             />
             <input
               type="password"
               className="input"
               placeholder="비밀번호"
-              name="password"
-              {...register("signupPassword")}
-            />
-            <input
-              type="text"
-              className="input"
-              placeholder="닉네임"
-              name="nickname"
-              {...register("signupNickname")}
+              {...register("loginPassword")}
             />
           </div>
+
           <button className="submit-btn" type="submit" disabled={isSubmitting}>
-            회원가입
+            로그인
           </button>
         </form>
         <div className="login slide-up">
@@ -107,28 +99,38 @@ const User = () => {
             onSubmit={handleSubmit((data) => postLogin(data))}
           >
             <h2 className="form-title" id="login">
-              <span>or</span>로그인
+              <span>or</span>회원가입
             </h2>
             <div className="form-holder">
               <input
                 type="text"
                 className="input"
                 placeholder="아이디"
-                {...register("loginLoginId")}
+                name="loginId"
+                {...register("signupLoginId")}
               />
               <input
                 type="password"
                 className="input"
                 placeholder="비밀번호"
-                {...register("loginPassword")}
+                name="password"
+                {...register("signupPassword")}
+              />
+              <input
+                type="text"
+                className="input"
+                placeholder="닉네임"
+                name="nickname"
+                {...register("signupNickname")}
               />
             </div>
+
             <button
               className="submit-btn"
               type="submit"
               disabled={isSubmitting}
             >
-              로그인
+              회원가입
             </button>
           </form>
         </div>
