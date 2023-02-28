@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import { TbArrowsDownUp } from "react-icons/tb";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { getRivews } from "../api/reivewCards";
+import { getReviews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 
 // 팀장님 여깁뉘다!!!!!!!!!!!!!!!!!!
@@ -12,7 +12,7 @@ import LoadingSpinner from "../style/LoadingSpinner";
 function Main() {
   const navigate = useNavigate();
 
-  const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
+  const { isLoading, isError, data, error } = useQuery("reviews", getReviews);
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -21,6 +21,7 @@ function Main() {
   if (isError) {
     return console.log("errorㅠㅠㅠㅠㅠㅠ", error);
   }
+  
 
   const handleSort = () => {
     data.reverse();
@@ -49,7 +50,7 @@ function Main() {
             <Card.Text>{review.content}</Card.Text>
           </Card.Body>
         </Card>
-      ))}
+))}
     </div>
   );
 }

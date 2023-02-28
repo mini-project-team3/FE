@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import Button from "../style/signinOrUp/Button";
+import {Button, delButton} from "../style/signinOrUp/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import instance from "../api/instance";

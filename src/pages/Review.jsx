@@ -36,7 +36,7 @@ const Review = () => {
               type="checkbox"
               value={category}
               onChange={(e) => {
-                setCategory(e.target.value);
+                setCategory([...category, e.target.value]);
                 // console.log({category})
               }}
             />
