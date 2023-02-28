@@ -2,28 +2,9 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect } from "react";
-
-const postSignup = async (data) => {
-  data = {
-    loginId: data.signupLoginId,
-    password: data.signupPassword,
-    nickname: data.signupNickname,
-  };
-  const res = await axios.post(
-    `${process.env.REACT_APP_BASEURL}/api/users/signup`,
-    data
-  );
-  console.log(res);
-};
-
-const postLogin = async (data) => {
-  data = { loginId: data.loginLoginId, password: data.loginPassword };
-  const res = await axios.post(
-    `${process.env.REACT_APP_BASEURL}/api/users/login`,
-    data
-  );
-  console.log(res);
-};
+import { useDispatch } from "react-redux";
+import { SET_TOKEN } from "../redux/modules/Auth";
+import { useNavigate } from "react-router-dom";
 
 const User = () => {
   useEffect(() => {
@@ -55,7 +36,34 @@ const User = () => {
     });
   }, []);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { register, isSubmitting, handleSubmit } = useForm();
+
+  const postSignup = async (data) => {
+    data = {
+      loginId: data.signupLoginId,
+      password: data.signupPassword,
+      nickname: data.signupNickname,
+    };
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASEURL}/api/users/signup`,
+      data
+    );
+    return res.data;
+  };
+
+  const postLogin = async (data) => {
+    data = { loginId: data.loginLoginId, password: data.loginPassword };
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASEURL}/api/users/login`,
+      data
+    );
+    const [_, token] = res.headers.authorization.split(" ");
+    dispatch(SET_TOKEN(token));
+    navigate("/");
+  };
+
   return (
     <FormStyle>
       <div className="form-structor">
