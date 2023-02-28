@@ -2,7 +2,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { getRivews } from "../api/reviewCards";
+import { getRivews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
 
