@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Navigation from "./Navigation";
 import Bgm from "./Bgm";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // 스타일을 적용할 컴포넌트를 생성합니다.
@@ -35,7 +33,6 @@ const Header = () => {
     <>
       <Bgm />
       <StyledHeader onClick={goToHome} />
-      <Navigation />
     </>
   );
 };
