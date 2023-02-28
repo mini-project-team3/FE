@@ -5,13 +5,7 @@ import MainHome from "../pages/MainHome";
 import Review from "../pages/Review";
 import Detail from "../pages/Detail";
 import Test from "../pages/Test";
-
-const {
-  BrowserRouter,
-  Routes,
-  Route,
-  useNavigate,
-} = require("react-router-dom");
+import { Routes, Route } from "react-router-dom";
 
 const Router = () => {
   return (
