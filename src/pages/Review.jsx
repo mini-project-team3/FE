@@ -12,7 +12,9 @@ const Review = () => {
       title: { title },
       contents: { contents },
       categoryList: { category },
+      
     })
+    console.log({'title':{title}, 'contents':{contents}, 'categoryList':{category}})
   }
 
   const categoryList = [
@@ -36,34 +38,14 @@ const Review = () => {
             {item}
             <input
               type="checkbox"
-              value={category}
+              value={`C${i}`}
               onChange={(e) => {
                 setCategory([...category, e.target.value]);
-                // console.log({category})
               }}
             />
           </div>
         );
       })}
-
-      {/* <form action="api/reviews" method="POST">
-      <div>
-        Category : <input type="checkbox" name="categoryList"
-        value={"C1[]"}/>인문
-        <input type="checkbox" name="categoryList"
-        value={"C2[]"}/>사회
-        <input type="checkbox" name="categoryList"
-        value={"C3[]"}/>과학
-        <input type="checkbox" name="categoryList"
-        value={"C4[]"}/>문학
-        <input type="checkbox" name="categoryList"
-        value={"C5[]"}/>예술
-        <input type="checkbox" name="categoryList"
-        value={"C6[]"}/>가정
-        <input type="checkbox" name="categoryList"
-        value={"C7[]"}/>어린이
-      </div><br/>
-      </form> */}
 
       <div>
         <input
@@ -73,7 +55,7 @@ const Review = () => {
             setTitle(e.target.value);
           }}
           placeholder="책 제목을 입력하세요📚"
-        />
+          />
         <br />
         <textarea
           type="text"
@@ -84,7 +66,7 @@ const Review = () => {
           cols="30"
           rows="5"
           placeholder="여기에 내용을 써주세요~"
-        ></textarea>
+          />
       </div>
 
       <button

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
 // import Button from "react-bootstrap/Button";
@@ -13,6 +14,9 @@ function Main() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data, error } = useQuery("reviews", getReviews);
+  
+  const reviewList = data && data.data;
+  console.log(reviewList)
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -39,7 +43,7 @@ function Main() {
         onClick={handleSort}
       />
       <br />
-      {data?.map((review, id) => (
+      {reviewList.map((review, id) => (
         <Card
           key={review.id}
           bg="dark"

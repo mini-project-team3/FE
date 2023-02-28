@@ -12,7 +12,7 @@ const Detail = () => {
     })
   )
 
- 
+    console.log(result)
 
     return(<div className="layout">
        {result.isLoading ? <LoadingSpinner/> : 
@@ -23,7 +23,8 @@ const Detail = () => {
         text="white"
         style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
         className="my-2"
-      ><button>👍</button>
+      >
+        <button>👍</button>
         <Card.Header>{result.data.title}</Card.Header>
         <Card.Body>
           <Card.Title>{result.data.contents}</Card.Title>
