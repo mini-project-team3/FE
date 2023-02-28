@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import { TbArrowsDownUp } from "react-icons/tb";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { getRivews } from "../api/reivewCards";
+import { getRivews } from "../api/reviewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 
 // 팀장님 여깁뉘다!!!!!!!!!!!!!!!!!!
@@ -14,6 +14,7 @@ function Main() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
+  const reviewList = data.data;
   // console.log("이data는뭘까", data);
 
   if (isLoading) {
@@ -39,18 +40,18 @@ function Main() {
     <div className="d-flex flex-column align-items-center">
       <TbArrowsDownUp style={{ fontSize: "40px", cursor: "pointer" }} variant="dark" onClick={handleSort} />
       <br />
-      {data?.map((review, id) => (
+      {reviewList.map((review) => (
         <Card
-          key={id}
+          key={review.id}
           bg="dark"
           text="white"
           style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
           className="my-2"
-          onClick={() => goToDetailPage(id)}
+          onClick={() => goToDetailPage(review.id)}
         >
           <Card.Header>{review.title}</Card.Header>
           <Card.Body>
-            <Card.Title>샬라샬라</Card.Title>
+            <Card.Title>{review.nickname}</Card.Title>
             <Card.Text>{review.content}</Card.Text>
           </Card.Body>
         </Card>
