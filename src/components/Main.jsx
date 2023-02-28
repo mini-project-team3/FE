@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
 // import Button from "react-bootstrap/Button";
@@ -19,7 +20,7 @@ function Main() {
   }
 
   if (isError) {
-    return console.log("errorㅠㅠㅠㅠㅠㅠ", error);
+    return console.log("❌❌❌", error);
   }
 
   const handleSort = () => {
@@ -27,16 +28,15 @@ function Main() {
   };
 
   const goToDetailPage = (id) => {
+    // goToDetailPage 함수에서 id를 전달할 때, review.id를 전달해야함
     navigate(`/detail/${id}`);
   };
 
+  // const data = axios.get(`${process.env.REACT_APP_BASEURL}/api/reviews`);
+
   return (
     <div className="d-flex flex-column align-items-center">
-      <TbArrowsDownUp
-        style={{ fontSize: "40px", cursor: "pointer" }}
-        variant="dark"
-        onClick={handleSort}
-      />
+      <TbArrowsDownUp style={{ fontSize: "40px", cursor: "pointer" }} variant="dark" onClick={handleSort} />
       <br />
       {data.map((review, id) => (
         <Card
