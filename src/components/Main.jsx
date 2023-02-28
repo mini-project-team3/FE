@@ -39,9 +39,9 @@ function Main() {
         onClick={handleSort}
       />
       <br />
-      {data.map((review, id) => (
+      {data?.map((review, id) => (
         <Card
-          key={id}
+          key={review.id}
           bg="dark"
           text="white"
           style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}

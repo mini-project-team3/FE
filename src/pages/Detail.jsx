@@ -7,7 +7,7 @@ import LoadingSpinner from "../style/LoadingSpinner";
 const Detail = () => {
 
   let result = useQuery('상세조회', ()=>
-    axios.get('/api/reveiws/{id}').then((a)=>{
+    axios.get('http://13.113.67.140:8080//api/reveiws/{id}').then((a)=>{
      return a.data
     })
   )
@@ -18,7 +18,7 @@ const Detail = () => {
        {result.isLoading ? <LoadingSpinner/> : 
          
        <Card
-        // key={result.data.id}
+        key={result.data.id}
         bg="dark"
         text="white"
         style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}

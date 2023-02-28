@@ -8,7 +8,7 @@ const Review = () => {
   const [category, setCategory] = useState([]);
 
   const onSubmitHandler = async ()  => {
-    axios.post("api/reviews", {
+    axios.post(`${process.env.REACT_APP_BASEURL}/api/reviews`, {
       title: { title },
       contents: { contents },
       categoryList: { category },
@@ -25,7 +25,7 @@ const Review = () => {
     "어린이",
   ];
 
-  const onSubmitHandler = () => {};
+ 
 
   return (
     <div className="layout">
