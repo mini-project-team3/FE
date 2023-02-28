@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useState, useCallback } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
-import { IoBulbOutline } from "react-icons/io5";
 import Router from "./shared/Router";
 import Toggle from "./components/Toggle";
 
