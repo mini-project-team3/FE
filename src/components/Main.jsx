@@ -14,7 +14,7 @@ function Main() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
-  console.log(data);
+  // console.log("이data는뭘까", data);
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -39,7 +39,7 @@ function Main() {
     <div className="d-flex flex-column align-items-center">
       <TbArrowsDownUp style={{ fontSize: "40px", cursor: "pointer" }} variant="dark" onClick={handleSort} />
       <br />
-      {/* {data.map((review, id) => (
+      {data?.map((review, id) => (
         <Card
           key={id}
           bg="dark"
@@ -54,7 +54,7 @@ function Main() {
             <Card.Text>{review.content}</Card.Text>
           </Card.Body>
         </Card>
-      ))} */}
+      ))}
     </div>
   );
 }

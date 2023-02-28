@@ -4,7 +4,6 @@ import Signup from "../pages/Signup";
 import MainHome from "../pages/MainHome";
 import Review from "../pages/Review";
 import Detail from "../pages/Detail";
-import Test from "../pages/Test";
 import { Routes, Route } from "react-router-dom";
 
 const Router = () => {
@@ -16,7 +15,6 @@ const Router = () => {
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/review" element={<Review />} />
       <Route path="/detail/:id" element={<Detail />} />
-      <Route path="/test" element={<Test />} />
     </Routes>
   );
 };
