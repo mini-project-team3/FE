@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SET_TOKEN } from "../redux/modules/Auth";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination";
 
 const User = () => {
   useEffect(() => {
@@ -68,7 +69,7 @@ const User = () => {
     <FormStyle>
       <div className="form-structor">
         <form
-          onSubmit={handleSubmit((data) => postSignup(data))}
+          onSubmit={handleSubmit((data) => postLogin(data))}
           className="signup"
         >
           <h2 className="form-title" id="signup">
@@ -96,7 +97,7 @@ const User = () => {
         <div className="login slide-up">
           <form
             className="center"
-            onSubmit={handleSubmit((data) => postLogin(data))}
+            onSubmit={handleSubmit((data) => postSignup(data))}
           >
             <h2 className="form-title" id="login">
               <span>or</span>회원가입
@@ -135,6 +136,7 @@ const User = () => {
           </form>
         </div>
       </div>
+      <Pagination />
     </FormStyle>
   );
 };
