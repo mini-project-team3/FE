@@ -17,6 +17,8 @@ const Review = () => {
 
   const categoryList = ["인문", "사회", "과학", "문학", "예술", "가정", "어린이"];
 
+  const onSubmitHandler = () => {};
+
   return (
     <div className="layout">
       <h4>리뷰 작성</h4>
