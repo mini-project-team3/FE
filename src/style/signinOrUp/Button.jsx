@@ -5,4 +5,9 @@ const Button = styled.button`
   border-radius: 20px;
 `;
 
+const delButton = styled.button`
+  background-color: red;
+  border-radius: 20px;
+`;
+
 export default Button;

@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import '../App.css';
 
 const Review = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [category, setCategory] = useState([]);
+
+  const onSubmitHandler = async ()  => {
+    axios.post("api/reviews", {
+      title: { title },
+      contents: { contents },
+      categoryList: { category },
+    })
+  }
 
   const categoryList = [
     "인문",
@@ -19,11 +28,11 @@ const Review = () => {
   const onSubmitHandler = () => {};
 
   return (
-    <div>
-      <h4>리뷰작성 페이지</h4>
+    <div className="layout">
+      <h4>리뷰 작성</h4>
       {categoryList.map((item, i) => {
         return (
-          <div key={i}>
+          <div key={i} className='category'>
             {item}
             <input
               type="checkbox"
@@ -80,11 +89,8 @@ const Review = () => {
 
       <button
         onClick={() => {
-          axios.post("api/reviews", {
-            title: { title },
-            contents: { contents },
-            categoryList: { category },
-          });
+          onSubmitHandler();
+          console.log(onSubmitHandler)
         }}
       >
         등록하기
