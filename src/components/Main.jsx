@@ -25,11 +25,14 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
-  const [sortBy, setSortBy] = useState("createdAt");
+  const [createDateSort, setCreateDateSort] = useState(false);
+  const [likeSort, setLikeSort] = useState(false);
 
-  // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { criteria: sortBy }], getRivews);
+  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getRivews);
+
   const reviewList = data && data.data;
+
+  console.log(data);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -39,13 +42,25 @@ function Main() {
     return console.log("❌❌❌", error);
   }
 
-  const handleSortByLike = () => {
-    setSortBy("likeCount");
+  const handleSortByLikes = () => {
+    setLikeSort(true);
+    setCreateDateSort(false);
   };
 
-  const handleSortByCreatedAt = () => {
-    setSortBy("createdAt");
+  const handleSortByLatest = () => {
+    setLikeSort(false);
+    setCreateDateSort(true);
   };
+
+  const sortedList = reviewList.sort((a, b) => {
+    if (likeSort) {
+      return b.likeCount - a.likeCount;
+    } else if (createDateSort) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else {
+      return 0;
+    }
+  });
 
   const goToDetailPage = (id) => {
     navigate(`/detail/${id}`);
@@ -55,13 +70,13 @@ function Main() {
     <div className="d-flex flex-column align-items-center">
       <div className="d-flex justify-content-center">
         <div className="d-flex w-100 justify-content-center">
-          <SortButton onClick={handleSortByLike}>Sort by Likes</SortButton>
-          <SortButton onClick={handleSortByCreatedAt}>Sort by Latest</SortButton>
+          <SortButton onClick={handleSortByLikes}>Sort by Likes</SortButton>
+          <SortButton onClick={handleSortByLatest}>Sort by Latest</SortButton>
         </div>
       </div>
 
       <br />
-      {reviewList.map((review) => (
+      {sortedList.map((review) => (
         <Card
           key={review.id}
           bg="dark"
@@ -74,6 +89,7 @@ function Main() {
           <Card.Body>
             <Card.Title>{review.nickname}</Card.Title>
             <Card.Text>{review.content}</Card.Text>
+            <div>{review.createdAt}</div>
           </Card.Body>
         </Card>
       ))}
