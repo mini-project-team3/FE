@@ -65,7 +65,7 @@ const User = () => {
     // const [_, token] = res.headers.authorization.split(" ");
     // dispatch(SET_TOKEN(token));
     // console.log(token);
-    navigate("/");
+    navigate("/mypage");
   };
 
   return (
