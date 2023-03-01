@@ -5,7 +5,6 @@ const Button = styled.button`
   border-radius: 20px;
 `;
 
-
 const Delbutton = styled.button`
   background-color: #ff0000;
   border-radius: 20px;
@@ -27,5 +26,4 @@ const BlackBtn = styled.button`
   }
 `;
 
-
-export  {Button, Delbutton, BlackBtn} 
+export { Button, Delbutton, BlackBtn };

@@ -2,11 +2,11 @@ import { useState } from "react";
 // import Card from "react-bootstrap/Card";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { getReviews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
 import ReviewCard from "./ReviewCard";
 import { goToDetailPage } from "../utils/goToDetailPage";
+import { getRivews } from "../api/reviewCards";
 
 const SortButton = styled.button`
   background-color: black;
@@ -31,7 +31,7 @@ function Main() {
   const [likeSort, setLikeSort] = useState(false);
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getReviews);
+  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getRivews);
   const reviewList = data && data.data;
 
   console.log(data);
