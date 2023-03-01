@@ -25,11 +25,13 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
-
   const [sortBy, setSortBy] = useState("createdAt");
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { criteria: sortBy }], getRivews);
+  const { isLoading, isError, data, error } = useQuery(
+    ["reviews", { criteria: sortBy }],
+    getRivews
+  );
   const reviewList = data && data.data;
 
   if (isLoading) {
@@ -57,7 +59,9 @@ function Main() {
       <div className="d-flex justify-content-center">
         <div className="d-flex w-100 justify-content-center">
           <SortButton onClick={handleSortByLike}>Sort by Likes</SortButton>
-          <SortButton onClick={handleSortByCreatedAt}>Sort by Latest</SortButton>
+          <SortButton onClick={handleSortByCreatedAt}>
+            Sort by Latest
+          </SortButton>
         </div>
       </div>
 
@@ -72,7 +76,7 @@ function Main() {
           className="my-2"
           onClick={() => goToDetailPage(review.id)}
         >
-          <Card.Header>{item.title}</Card.Header>
+          <Card.Header>{review.title}</Card.Header>
           <Card.Body>
             <Card.Title>{review.nickname}</Card.Title>
             <Card.Text>{review.content}</Card.Text>
