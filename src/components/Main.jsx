@@ -25,6 +25,7 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
+
   const [sortBy, setSortBy] = useState("createdAt");
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
@@ -61,6 +62,7 @@ function Main() {
       </div>
 
       <br />
+
       {reviewList.map((review) => (
         <Card
           key={review.id}
@@ -70,7 +72,7 @@ function Main() {
           className="my-2"
           onClick={() => goToDetailPage(review.id)}
         >
-          <Card.Header>{review.title}</Card.Header>
+          <Card.Header>{item.title}</Card.Header>
           <Card.Body>
             <Card.Title>{review.nickname}</Card.Title>
             <Card.Text>{review.content}</Card.Text>

@@ -60,6 +60,7 @@ const User = () => {
       `${process.env.REACT_APP_BASEURL}/api/users/login`,
       data
     );
+
     const [_, token] = res.headers.authorization.split(" ");
     dispatch(SET_TOKEN(token));
     navigate("/");
