@@ -13,7 +13,9 @@ function ReviewCard({ review, onClick }) {
       <Card.Header>{review.title}</Card.Header>
       <Card.Body>
         <Card.Title>{review.nickname}</Card.Title>
+        <Card.Title>{review.nickname}</Card.Title>
         <Card.Text>{review.content}</Card.Text>
+        <div>{review.createdAt}</div>
         <div>{review.createdAt}</div>
       </Card.Body>
     </Card>
