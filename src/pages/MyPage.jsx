@@ -10,40 +10,31 @@ import LoadingSpinner from "../style/LoadingSpinner";
 const MyPage = () => {
   const navigate = useNavigate();
   const [sortBy, setSortBy] = useState("TIME");
+  const accessToken = useSelector((state) => state.authToken.accessToken);
 
+  const token = window.localStorage.getItem("token");
   const { isLoading, isError, error, data, refetch } = useQuery(
     ["getMyReviews"],
-    () => {
-      if (sortBy === "TIME") {
-        return axios.get(`${process.env.REACT_APP_BASEURL}/myreviews`);
-      } else if (sortBy === "LIKES") {
-        return axios.get("http://localhost:5000/reviewList");
-      }
-    }
+    () =>
+      axios.get(`${process.env.REACT_APP_BASEURL}/api/myreviews`, {
+        headers: { Authorization: token },
+      })
   );
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
   if (isError) {
-    console.log(error);
+    console.log(error.response.data.error.message);
   }
+
+  const myList = data.data.data;
 
   const reSort = (criteria) => {
     if (criteria !== sortBy) {
       setSortBy(criteria);
       refetch();
     }
-  };
-
-  const Logout = () => {
-    // store에 저장된 Access Token 정보를 받아 온다
-    const { accessToken } = useSelector((state) => state.token);
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    // Cookie에 저장된 Refresh Token 정보를 받아 온다
   };
 
   const navArea = (
@@ -59,8 +50,8 @@ const MyPage = () => {
     return (
       <Container>
         {navArea}
-        {data?.data.map((item) => (
-          <ReviewCard key={item.id} />
+        {myList?.map((item) => (
+          <ReviewCard key={item.id} review={item} />
         ))}
       </Container>
     );
@@ -68,7 +59,7 @@ const MyPage = () => {
     return (
       <Container>
         {navArea}
-        {data?.data.map((item) => (
+        {myList?.map((item) => (
           <ReviewCard key={item.id} />
         ))}
       </Container>

@@ -33,6 +33,8 @@ function Main() {
   const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getReviews);
   const reviewList = data && data.data;
 
+  console.log(data);
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -40,6 +42,7 @@ function Main() {
   if (isError) {
     return console.log("❌❌❌", error);
   }
+
 
   const handleSortByLike = () => {
     setLikeSort(true);
@@ -88,6 +91,7 @@ function Main() {
           <Card.Body>
             <Card.Title>{review.nickname}</Card.Title>
             <Card.Text>{review.content}</Card.Text>
+            <div>{review.createdAt}</div>
           </Card.Body>
         </Card>
       ))}

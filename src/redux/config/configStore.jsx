@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterSlice from "../modules/counterSlice";
 import loginSlice from "../modules/loginSlice";
 import tokenReducer from "../modules/Auth";
+import paginationSlice from "../modules/paginationSlice";
 
 const store = configureStore({
-  reducer: { counterSlice: counterSlice, loginSlice, authToken: tokenReducer },
+  reducer: { loginSlice, authToken: tokenReducer, paginationSlice },
 });
 
 export default store;
