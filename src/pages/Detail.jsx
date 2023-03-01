@@ -4,9 +4,15 @@ import { Card } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { Button, Delbutton } from "../style/signinOrUp/Button";
 import LoadingSpinner from "../style/LoadingSpinner";
+import { InputSt } from "../style/ReviewPage.jsx";
+import { useParams } from "react-router-dom";
 
 const Detail = React.memo(() => {
-  // Detail 컴포넌트를 생성합니다.
+  let { id } = useParams();
+
+  const [modal, setModal] = useState(false);
+  const [contents, setContents] = useState("");
+
   const token = window.localStorage.getItem("token"); // 로컬 스토리지에서 토큰을 가져오가
   const [likes, setLikes] = useState(0); // 좋아요 수를 useState관리
 
@@ -16,24 +22,28 @@ const Detail = React.memo(() => {
     event.preventDefault(); // 기본 동작을 막습니다.
     await axios.post(
       // axios로 POST 요청을 보냅니다.
-      `${process.env.REACT_APP_BASEURL}/api/reviews/likes/${data.id}`, // 좋아요 API 주소
+      `${process.env.REACT_APP_BASEURL}/api/reviews/likes/${id}`, // 좋아요 API 주소
       {},
       { headers: { authorization: token } } // 토큰을 헤더에 담아보냄
     );
     refetch(); // 데이터를 다시 불러옴
   };
 
+  const onSubmitcontentsHandler = async () => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/api/reviews/${id}`, {
+      headers: { authorization: token },
+      contents: { contents },
+    });
+  };
+
   const { isLoading, isError, data, refetch } = useQuery(
     // useQuery를 사용하여 데이터를 불러옴.
     ["getDetailReviews"], // 캐시에 저장될 고유한 키
-    () =>
-      axios.get(`${process.env.REACT_APP_BASEURL}/api/reviews/${data.id}`, {
-        // axios로 GET 요청을 보냅니다.
+    () => {
+      console.log("실행");
+      return axios.get(`${process.env.REACT_APP_BASEURL}/api/reviews/${id}`, {
         headers: { authorization: token }, // 토큰을 헤더에 담아 보냄
-      }),
-    {
-      staleTime: 30000, // 데이터를 캐시할 시간입니다. 30초 동안 데이터가 캐시
-      refetchOnWindowFocus: false, // 창 포커스 시 데이터를 다시 불러오지 않도록 설정
+      });
     }
   );
 
@@ -66,11 +76,37 @@ const Detail = React.memo(() => {
           <Delbutton>삭제</Delbutton>
         </div>
       </Card>
-      <div>
-        <h4>댓글창</h4>
+
+      <div
+        onClick={() => {
+          setModal(true);
+        }}
+      >
+        {/* {data && data.commentList.contents} */}
+        댓글창
       </div>
+
+      {modal == true ? (
+        <Modal contents={contents} setContents={setContents} onSubmitcontentsHandler={onSubmitcontentsHandler} />
+      ) : null}
     </div>
   );
 });
+
+function Modal(props) {
+  return (
+    <div>
+      <InputSt
+        type="text"
+        value={props.contents}
+        onChange={(e) => {
+          props.setContents(e.target.value);
+        }}
+        placeholder="댓글을 작성해보세요"
+      />
+      <button onClick={props.onSubmitcontentsHandler()}>확인</button>
+    </div>
+  );
+}
 
 export default Detail;
