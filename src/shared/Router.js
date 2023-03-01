@@ -4,7 +4,6 @@ import Signup from "../pages/User";
 import MainHome from "../pages/MainHome";
 import Review from "../pages/Review";
 import Detail from "../pages/Detail";
-import Test from "../pages/Test";
 import { Routes, Route } from "react-router-dom";
 import User from "../pages/User";
 
