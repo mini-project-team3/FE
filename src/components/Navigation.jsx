@@ -32,7 +32,8 @@ const Stylednav = styled(Navbar)`
   margin-bottom: 60px;
 
   .navbar-toggler {
-    border-color: ${({ theme }) => theme.color}; // 테마 모드에 따른 버튼 색상 적용
+    border-color: ${({ theme }) =>
+      theme.color}; // 테마 모드에 따른 버튼 색상 적용
   }
 `;
 
@@ -66,7 +67,10 @@ function Navigation() {
     <Stylednav>
       <Container>
         <Navbar.Toggle />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-between">
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="justify-content-between"
+        >
           <Nav>
             <StyledNavDropdown title="Kategorie" id="basic-nav-dropdown">
               {dropdownMenu}

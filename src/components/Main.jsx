@@ -7,6 +7,8 @@ import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
 import ReviewCard from "./ReviewCard";
 import { goToDetailPage } from "../utils/goToDetailPage";
+import Pagination from "./Pagination";
+import { useSelector } from "react-redux";
 
 const SortButton = styled.button`
   background-color: black;
@@ -27,11 +29,21 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
+  //페이지네이션 관련
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
+  // 현재 페이지
+  const currentPage = pageSelector.payload || 1;
+
   const [createDateSort, setCreateDateSort] = useState(false);
   const [likeSort, setLikeSort] = useState(false);
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getReviews);
+  const { isLoading, isError, data, error } = useQuery(
+    ["reviews", { pageNum: 1, criteria: "likeCount" }],
+    getReviews
+  );
   const reviewList = data && data.data;
 
   console.log(data);
@@ -75,8 +87,13 @@ function Main() {
 
       <br />
       {sortedList.map((review) => (
-        <ReviewCard key={review.id} review={review} onClick={() => goToDetailPage(navigate, review.id)} />
+        <ReviewCard
+          key={review.id}
+          review={review}
+          onClick={() => goToDetailPage(navigate, review.id)}
+        />
       ))}
+      <Pagination />
     </div>
   );
 }
