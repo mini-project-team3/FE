@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { setCurrentPage } from "../redux/modules/paginationSlice";
 
-const Pagination = ({ curPageNum }) => {
-  const [pageNum, setPageNum] = useState(curPageNum || 1);
-  const [pageGroupNum, setPageGroupNum] = useState(1);
+const Pagination = () => {
+  const dispatch = useDispatch();
+  const [curPage, setCurPage] = useState(1);
+
   const newSelect = (e) => {
-    const a = document.querySelector(".pg-active");
-    a.classList.remove("pg-active");
-    e.target.classList.add("pg-active");
-    setPageNum(Number(e.target.textContent));
+    dispatch(setCurrentPage(e.target.textContent));
+    setCurPage(Number(e.target.textContent));
   };
 
   return (
@@ -16,19 +17,19 @@ const Pagination = ({ curPageNum }) => {
       <ul className="pagination">
         <li className="pagination-item">이전</li>
         <li className="pagination-item" onClick={newSelect}>
-          {curPageNum - 2}
+          {curPage - 2}
         </li>
         <li className="pagination-item" onClick={newSelect}>
-          {curPageNum - 1}
+          {curPage - 1}
         </li>
         <li className="pagination-item pg-active" onClick={newSelect}>
-          {curPageNum}
+          {curPage}
         </li>
         <li className="pagination-item" onClick={newSelect}>
-          {curPageNum + 1}
+          {curPage + 1}
         </li>
         <li className="pagination-item" onClick={newSelect}>
-          {curPageNum + 2}
+          {curPage + 2}
         </li>
 
         <li className="pagination-item">다음</li>

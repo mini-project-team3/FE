@@ -137,6 +137,7 @@ const User = () => {
           </form>
         </div>
       </div>
+      <Pagination />
     </FormStyle>
   );
 };
