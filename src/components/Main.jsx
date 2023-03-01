@@ -14,7 +14,7 @@ function Main() {
   const navigate = useNavigate();
 
   const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
-  console.log(data);
+  const reviewList = data.data;
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -40,18 +40,18 @@ function Main() {
         onClick={handleSort}
       />
       <br />
-      {data?.map((review, id) => (
+      {reviewList.map((item) => (
         <Card
           bg="dark"
           text="white"
           style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
           className="my-2"
-          onClick={() => goToDetailPage(id)}
+          onClick={() => goToDetailPage(item.id)}
         >
-          <Card.Header>{review.title}</Card.Header>
+          <Card.Header>{item.title}</Card.Header>
           <Card.Body>
             <Card.Title>샬라샬라</Card.Title>
-            <Card.Text>{review.content}</Card.Text>
+            <Card.Text>review.content</Card.Text>
           </Card.Body>
         </Card>
       ))}
