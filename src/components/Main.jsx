@@ -1,31 +1,51 @@
-import axios from "axios";
 import { useState } from "react";
 import Card from "react-bootstrap/Card";
-// import Button from "react-bootstrap/Button";
-import { TbArrowsDownUp } from "react-icons/tb";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { getRivews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
+import styled from "styled-components";
 
-// 팀장님 여깁뉘다!!!!!!!!!!!!!!!!!!
+const SortButton = styled.button`
+  background-color: black;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+  padding: 0.4rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 function Main() {
   const navigate = useNavigate();
 
-  const { isLoading, isError, data, error } = useQuery("rivews", getRivews);
-  const reviewList = data.data;
+
+  const [sortBy, setSortBy] = useState("createdAt");
+
+  // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
+  const { isLoading, isError, data, error } = useQuery(["reviews", { criteria: sortBy }], getRivews);
+  const reviewList = data && data.data;
 
   if (isLoading) {
-    return <LoadingSpinner></LoadingSpinner>;
+    return <LoadingSpinner />;
   }
 
   if (isError) {
-    return console.log("errorㅠㅠㅠㅠㅠㅠ", error);
+    return console.log("❌❌❌", error);
   }
 
-  const handleSort = () => {
-    data.reverse();
+  const handleSortByLike = () => {
+    setSortBy("likeCount");
+  };
+
+  const handleSortByCreatedAt = () => {
+    setSortBy("createdAt");
   };
 
   const goToDetailPage = (id) => {
@@ -34,24 +54,28 @@ function Main() {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      <TbArrowsDownUp
-        style={{ fontSize: "40px", cursor: "pointer" }}
-        variant="dark"
-        onClick={handleSort}
-      />
+      <div className="d-flex justify-content-center">
+        <div className="d-flex w-100 justify-content-center">
+          <SortButton onClick={handleSortByLike}>Sort by Likes</SortButton>
+          <SortButton onClick={handleSortByCreatedAt}>Sort by Latest</SortButton>
+        </div>
+      </div>
+
       <br />
-      {reviewList.map((item) => (
+
+      {reviewList.map((review) => (
         <Card
+          key={review.id}
           bg="dark"
           text="white"
           style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
           className="my-2"
-          onClick={() => goToDetailPage(item.id)}
+          onClick={() => goToDetailPage(review.id)}
         >
           <Card.Header>{item.title}</Card.Header>
           <Card.Body>
-            <Card.Title>샬라샬라</Card.Title>
-            <Card.Text>review.content</Card.Text>
+            <Card.Title>{review.nickname}</Card.Title>
+            <Card.Text>{review.content}</Card.Text>
           </Card.Body>
         </Card>
       ))}

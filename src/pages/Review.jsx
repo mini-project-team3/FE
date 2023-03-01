@@ -6,17 +6,15 @@ const Review = () => {
   const [contents, setContents] = useState("");
   const [category, setCategory] = useState([]);
 
-  const categoryList = [
-    "인문",
-    "사회",
-    "과학",
-    "문학",
-    "예술",
-    "가정",
-    "어린이",
-  ];
+  const onSubmitHandler = async () => {
+    axios.post("api/reviews", {
+      title: { title },
+      contents: { contents },
+      categoryList: { category },
+    });
+  };
 
-  const onSubmitHandler = () => {};
+  const categoryList = ["인문", "사회", "과학", "문학", "예술", "가정", "어린이"];
 
   return (
     <div>
