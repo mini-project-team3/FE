@@ -12,6 +12,21 @@ const Pagination = () => {
     setCurPage(Number(e.target.textContent));
   };
 
+  const onClickNextButtonHandler = () => {
+    dispatch(setCurrentPage(curPage + 5));
+    setCurPage(curPage + 5);
+  };
+
+  const onClickPrevButtonHandler = () => {
+    if (curPage - 5 < 1) {
+      dispatch(setCurrentPage(1));
+      setCurPage(1);
+      return;
+    }
+    dispatch(setCurrentPage(curPage - 5));
+    setCurPage(curPage - 5);
+  };
+
   switch (curPage) {
     case 1:
       return (
@@ -34,7 +49,9 @@ const Pagination = () => {
               5
             </li>
 
-            <li className="pagination-item">다음</li>
+            <li className="pagination-item" onClick={onClickNextButtonHandler}>
+              다음
+            </li>
           </ul>
         </PagiNationStyle>
       );
@@ -42,7 +59,9 @@ const Pagination = () => {
       return (
         <PagiNationStyle>
           <ul className="pagination">
-            <li className="pagination-item">이전</li>
+            <li className="pagination-item" onClick={onClickPrevButtonHandler}>
+              이전
+            </li>
             <li className="pagination-item " onClick={newSelect}>
               1
             </li>
@@ -59,7 +78,9 @@ const Pagination = () => {
               5
             </li>
 
-            <li className="pagination-item">다음</li>
+            <li className="pagination-item" onClick={onClickNextButtonHandler}>
+              다음
+            </li>
           </ul>
         </PagiNationStyle>
       );
@@ -67,7 +88,9 @@ const Pagination = () => {
       return (
         <PagiNationStyle>
           <ul className="pagination">
-            <li className="pagination-item">이전</li>
+            <li className="pagination-item" onClick={onClickPrevButtonHandler}>
+              이전
+            </li>
             <li className="pagination-item" onClick={newSelect}>
               {curPage - 2}
             </li>
@@ -84,7 +107,9 @@ const Pagination = () => {
               {curPage + 2}
             </li>
 
-            <li className="pagination-item">다음</li>
+            <li className="pagination-item" onClick={onClickNextButtonHandler}>
+              다음
+            </li>
           </ul>
         </PagiNationStyle>
       );
