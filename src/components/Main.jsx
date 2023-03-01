@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Card from "react-bootstrap/Card";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { getRivews } from "../api/reviewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
+import ReviewCard from "./ReviewCard";
 
 const SortButton = styled.button`
   background-color: black;
@@ -77,21 +77,7 @@ function Main() {
 
       <br />
       {sortedList.map((review) => (
-        <Card
-          key={review.id}
-          bg="dark"
-          text="white"
-          style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
-          className="my-2"
-          onClick={() => goToDetailPage(review.id)}
-        >
-          <Card.Header>{review.title}</Card.Header>
-          <Card.Body>
-            <Card.Title>{review.nickname}</Card.Title>
-            <Card.Text>{review.content}</Card.Text>
-            <div>{review.createdAt}</div>
-          </Card.Body>
-        </Card>
+        <ReviewCard key={review.id} review={review} onClick={() => goToDetailPage(review.id)} />
       ))}
     </div>
   );
