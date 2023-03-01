@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination";
 import ReviewCard from "../components/ReviewCard";
 import LoadingSpinner from "../style/LoadingSpinner";
 import SortButton from "../style/SortButton";
@@ -15,6 +17,13 @@ const MyPage = () => {
       navigate("/user");
     }
   }, []);
+
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
+
+  const currentPage = pageSelector.payload || 1;
+
   const [sortBy, setSortBy] = useState("MyWrite");
   const criteria = "createdAt";
 
@@ -31,14 +40,18 @@ const MyPage = () => {
   const queryFunc = async () => {
     if (sortBy === "MyWrite") {
       return await axios.get(
-        `${process.env.REACT_APP_BASEURL}/api/myreviews?criteria=${criteria}`,
+        `${process.env.REACT_APP_BASEURL}/api/myreviews?page=${
+          currentPage - 1
+        }&criteria=${criteria}`,
         {
           headers: { authorization: token },
         }
       );
     } else if (sortBy === "LIKES") {
       return await axios.get(
-        `${process.env.REACT_APP_BASEURL}/api/reviews/likes?criteria=${criteria}`,
+        `${process.env.REACT_APP_BASEURL}/api/reviews/likes?page=${
+          currentPage - 1
+        }&criteria=${criteria}`,
         {
           headers: { authorization: token },
         }
@@ -99,6 +112,7 @@ const MyPage = () => {
         {myList?.map((item) => (
           <ReviewCard key={item.id} review={item} />
         ))}
+        <Pagination />
       </div>
     );
   } else if (sortBy === "LIKES") {
@@ -108,6 +122,7 @@ const MyPage = () => {
         {myList?.map((item) => (
           <ReviewCard key={item.id} review={item} />
         ))}
+        <Pagination />
       </div>
     );
   }

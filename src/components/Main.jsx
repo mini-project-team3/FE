@@ -7,6 +7,8 @@ import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
 import ReviewCard from "./ReviewCard";
 import { goToDetailPage } from "../utils/goToDetailPage";
+import Pagination from "./Pagination";
+import { useSelector } from "react-redux";
 
 const SortButton = styled.button`
   background-color: black;
@@ -26,6 +28,13 @@ const SortButton = styled.button`
 
 function Main() {
   const navigate = useNavigate();
+
+  //페이지네이션 관련
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
+  // 현재 페이지
+  const currentPage = pageSelector.payload || 1;
 
   const [createDateSort, setCreateDateSort] = useState(false);
   const [likeSort, setLikeSort] = useState(false);
@@ -78,8 +87,13 @@ function Main() {
 
       <br />
       {sortedList.map((review) => (
-        <ReviewCard key={review.id} review={review} onClick={() => goToDetailPage(navigate, review.id)} />
+        <ReviewCard
+          key={review.id}
+          review={review}
+          onClick={() => goToDetailPage(navigate, review.id)}
+        />
       ))}
+      <Pagination />
     </div>
   );
 }
