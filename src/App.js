@@ -13,11 +13,6 @@ const AppWrapper = styled.div`
   transition: all 0.5s linear;
 `;
 
-// const LargeIoBulbOutline = styled(IoBulbOutline)`
-//   font-size: 5em;
-//   justify-content: flex-end;
-// `;
-
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
 
