@@ -62,10 +62,7 @@ const User = () => {
     );
 
     window.localStorage.setItem("token", res.headers.authorization);
-    // const [_, token] = res.headers.authorization.split(" ");
-    // dispatch(SET_TOKEN(token));
-    // console.log(token);
-    navigate("/mypage");
+    navigate("/");
   };
 
   return (

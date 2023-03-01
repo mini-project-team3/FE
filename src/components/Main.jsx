@@ -28,9 +28,11 @@ function Main() {
   const [createDateSort, setCreateDateSort] = useState(false);
   const [likeSort, setLikeSort] = useState(false);
 
-
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getReviews);
+  const { isLoading, isError, data, error } = useQuery(
+    ["reviews", { pageNum: 1, criteria: "likeCount" }],
+    getReviews
+  );
   const reviewList = data && data.data;
 
   console.log(data);
@@ -42,7 +44,6 @@ function Main() {
   if (isError) {
     return console.log("❌❌❌", error);
   }
-
 
   const handleSortByLike = () => {
     setLikeSort(true);
