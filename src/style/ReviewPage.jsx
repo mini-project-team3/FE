@@ -31,7 +31,7 @@ const ReviewTitleSt = styled.div`
     font-family: "Lobster", cursive;
     font-size: 3rem;
   }
-`; 
+`;
 
 const InputSt = styled(Form.Control)`
   border: 2px solid;
@@ -42,4 +42,4 @@ const InputSt = styled(Form.Control)`
   border-radius: 10px;
 `;
 
-export {ReviewCardSt, CategorySt, CheckboxSt, ReviewTitleSt, InputSt}
+export { ReviewCardSt, CategorySt, CheckboxSt, ReviewTitleSt, InputSt };
