@@ -60,8 +60,8 @@ const User = () => {
       `${process.env.REACT_APP_BASEURL}/api/users/login`,
       data
     );
-    const [_, token] = res.headers.authorization.split(" ");
-    dispatch(SET_TOKEN(token));
+
+    window.localStorage.setItem("token", res.headers.authorization);
     navigate("/");
   };
 
@@ -80,12 +80,14 @@ const User = () => {
               type="text"
               className="input"
               placeholder="아이디"
+              value="user1"
               {...register("loginLoginId")}
             />
             <input
               type="password"
               className="input"
               placeholder="비밀번호"
+              value="Password1!"
               {...register("loginPassword")}
             />
           </div>
@@ -136,7 +138,6 @@ const User = () => {
           </form>
         </div>
       </div>
-      <Pagination />
     </FormStyle>
   );
 };

@@ -1,10 +1,14 @@
 import { useState } from "react";
-import Card from "react-bootstrap/Card";
+// import Card from "react-bootstrap/Card";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { getReviews } from "../api/reivewCards";
 import LoadingSpinner from "../style/LoadingSpinner";
 import styled from "styled-components";
+import ReviewCard from "./ReviewCard";
+import { goToDetailPage } from "../utils/goToDetailPage";
+import Pagination from "./Pagination";
+import { useSelector } from "react-redux";
 
 const SortButton = styled.button`
   background-color: black;
@@ -25,13 +29,24 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
+  //페이지네이션 관련
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
+  // 현재 페이지
+  const currentPage = pageSelector.payload || 1;
+
   const [createDateSort, setCreateDateSort] = useState(false);
   const [likeSort, setLikeSort] = useState(false);
 
-
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(["reviews", { pageNum: 1, criteria: "likeCount" }], getReviews);
+  const { isLoading, isError, data, error } = useQuery(
+    ["reviews", { pageNum: 1, criteria: "likeCount" }],
+    getReviews
+  );
   const reviewList = data && data.data;
+
+  console.log(data);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -61,10 +76,6 @@ function Main() {
     }
   });
 
-  const goToDetailPage = (id) => {
-    navigate(`/detail/${id}`);
-  };
-
   return (
     <div className="d-flex flex-column align-items-center">
       <div className="d-flex justify-content-center">
@@ -76,21 +87,13 @@ function Main() {
 
       <br />
       {sortedList.map((review) => (
-        <Card
+        <ReviewCard
           key={review.id}
-          bg="dark"
-          text="white"
-          style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
-          className="my-2"
-          onClick={() => goToDetailPage(review.id)}
-        >
-          <Card.Header>{review.title}</Card.Header>
-          <Card.Body>
-            <Card.Title>{review.nickname}</Card.Title>
-            <Card.Text>{review.content}</Card.Text>
-          </Card.Body>
-        </Card>
+          review={review}
+          onClick={() => goToDetailPage(navigate, review.id)}
+        />
       ))}
+      <Pagination />
     </div>
   );
 }

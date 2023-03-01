@@ -2,9 +2,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useState, useCallback } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import Header from "./components/Header";
-import Main from "./components/Main";
-import { IoBulbOutline } from "react-icons/io5";
 import Router from "./shared/Router";
+import Toggle from "./components/Toggle";
 
 const queryClient = new QueryClient();
 
@@ -14,17 +13,12 @@ const AppWrapper = styled.div`
   transition: all 0.5s linear;
 `;
 
-const LargeIoBulbOutline = styled(IoBulbOutline)`
-  font-size: 5em;
-  justify-content: flex-end;
-`;
-
 const App = () => {
   const [themeMode, setThemeMode] = useState("light");
 
   const toggleTheme = useCallback(() => {
-    setThemeMode(themeMode === "light" ? "dark" : "light");
-  }, [themeMode]);
+    setThemeMode((prevThemeMode) => (prevThemeMode === "light" ? "dark" : "light"));
+  }, []);
 
   const theme = {
     light: {
@@ -41,9 +35,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme[themeMode]}>
         <AppWrapper>
-          <LargeIoBulbOutline onClick={toggleTheme}>
-            {themeMode === "light" ? "Dark Mode" : "Light Mode"}
-          </LargeIoBulbOutline>
+          <Toggle onClick={toggleTheme}>{themeMode === "light" ? "Dark Mode" : "Light Mode"}</Toggle>
           <Header />
           <Router />
         </AppWrapper>
@@ -51,5 +43,4 @@ const App = () => {
     </QueryClientProvider>
   );
 };
-
 export default App;

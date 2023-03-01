@@ -11,7 +11,7 @@ const LoadingSpinner = styled.div`
     content: "";
     box-sizing: border-box;
     position: absolute;
-    top: 24%;
+    top: 18%;
     left: 50%;
     width: 50px;
     height: 50px;

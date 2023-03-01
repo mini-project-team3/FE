@@ -1,77 +1,130 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Card, Container } from "react-bootstrap";
 import { useQuery } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination";
 import ReviewCard from "../components/ReviewCard";
 import LoadingSpinner from "../style/LoadingSpinner";
+import SortButton from "../style/SortButton";
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const [sortBy, setSortBy] = useState("TIME");
+  const token = window.localStorage.getItem("token");
 
+  useEffect(() => {
+    if (token === null) {
+      navigate("/user");
+    }
+  }, []);
+
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
+
+  const currentPage = pageSelector.payload || 1;
+
+  const [sortBy, setSortBy] = useState("MyWrite");
+  const [handleSort, setHandleSort] = useState("createdAt");
+
+  const handleSortBy = (target) => {
+    if (handleSort === target) {
+      return;
+    }
+    setHandleSort(target);
+    refetch();
+  };
+  const queryFunc = async () => {
+    if (sortBy === "MyWrite") {
+      return await axios.get(
+        `${process.env.REACT_APP_BASEURL}/api/myreviews?page=${
+          currentPage - 1
+        }&criteria=${handleSort}`,
+        {
+          headers: { authorization: token },
+        }
+      );
+    } else if (sortBy === "LIKES") {
+      return await axios.get(
+        `${process.env.REACT_APP_BASEURL}/api/reviews/likes?page=${
+          currentPage - 1
+        }&criteria=${handleSort}`,
+        {
+          headers: { authorization: token },
+        }
+      );
+    }
+  };
   const { isLoading, isError, error, data, refetch } = useQuery(
     ["getMyReviews"],
-    () => {
-      if (sortBy === "TIME") {
-        return axios.get(`${process.env.REACT_APP_BASEURL}/myreviews`);
-      } else if (sortBy === "LIKES") {
-        return axios.get("http://localhost:5000/reviewList");
-      }
-    }
+    queryFunc
   );
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
   if (isError) {
-    console.log(error);
+    console.log(error.response.data.error.message);
   }
 
+  const myList = data.data.data;
+
   const reSort = (criteria) => {
-    if (criteria !== sortBy) {
-      setSortBy(criteria);
-      refetch();
+    if (criteria === sortBy) {
+      return;
     }
+    setSortBy(criteria);
+    refetch();
   };
 
-  const Logout = () => {
-    // store에 저장된 Access Token 정보를 받아 온다
-    const { accessToken } = useSelector((state) => state.token);
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    // Cookie에 저장된 Refresh Token 정보를 받아 온다
+  const onLogoutHandler = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
   };
 
   const navArea = (
     <div>
-      <button>로그아웃</button>
-      <button onClick={() => reSort("TIME")}>최신 순</button>
-      <button onClick={() => reSort("LIKES")}>좋아요 순</button>
-      <br />
+      <div className="d-flex w-100 justify-content-center">
+        <SortButton onClick={onLogoutHandler}>로그아웃</SortButton>
+      </div>
+      <div className="d-flex w-100 justify-content-center">
+        <SortButton onClick={() => reSort("MyWrite")}>
+          내가 쓴 리뷰 조회
+        </SortButton>
+        <SortButton onClick={() => reSort("LIKES")}>
+          내가 좋아요한 리뷰 조회
+        </SortButton>
+      </div>
+      <div className="d-flex w-100 justify-content-center">
+        <SortButton onClick={() => handleSortBy("likeCount")}>
+          Sort by Likes
+        </SortButton>
+        <SortButton onClick={() => handleSortBy("createdAt")}>
+          Sort by Latest
+        </SortButton>
+      </div>
     </div>
   );
 
-  if (sortBy === "TIME") {
+  if (sortBy === "MyWrite") {
     return (
-      <Container>
+      <div className="d-flex flex-column align-items-center">
         {navArea}
-        {data?.data.map((item) => (
-          <ReviewCard key={item.id} />
+        {myList?.map((item) => (
+          <ReviewCard key={item.id} review={item} />
         ))}
-      </Container>
+        <Pagination />
+      </div>
     );
   } else if (sortBy === "LIKES") {
     return (
-      <Container>
+      <div className="d-flex flex-column align-items-center">
         {navArea}
-        {data?.data.map((item) => (
-          <ReviewCard key={item.id} />
+        {myList?.map((item) => (
+          <ReviewCard key={item.id} review={item} />
         ))}
-      </Container>
+        <Pagination />
+      </div>
     );
   }
 };
