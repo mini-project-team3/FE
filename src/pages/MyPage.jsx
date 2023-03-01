@@ -51,7 +51,7 @@ const MyPage = () => {
       <Container>
         {navArea}
         {myList?.map((item) => (
-          <ReviewCard key={item.id} />
+          <ReviewCard key={item.id} review={item} />
         ))}
       </Container>
     );
