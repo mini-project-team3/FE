@@ -1,13 +1,6 @@
-import React from "react";
 import Card from "react-bootstrap/Card";
-import { useNavigate } from "react-router-dom";
 
-const ReviewCard = ({ review }) => {
-  const navigate = useNavigate();
-
-  const goToDetailPage = (id) => {
-    navigate(`/detail/${id}`);
-  };
+function ReviewCard({ review, onClick }) {
   return (
     <Card
       key={review.id}
@@ -15,7 +8,7 @@ const ReviewCard = ({ review }) => {
       text="white"
       style={{ width: "30rem", height: "20rem", borderRadius: "20px" }}
       className="my-2"
-      onClick={() => goToDetailPage(review.id)}
+      onClick={onClick}
     >
       <Card.Header>{review.title}</Card.Header>
       <Card.Body>
@@ -25,6 +18,6 @@ const ReviewCard = ({ review }) => {
       </Card.Body>
     </Card>
   );
-};
+}
 
 export default ReviewCard;
