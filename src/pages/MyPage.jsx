@@ -13,7 +13,6 @@ const MyPage = () => {
   const accessToken = useSelector((state) => state.authToken.accessToken);
 
   const token = window.localStorage.getItem("token");
-  console.log("token : ", token);
   const { isLoading, isError, error, data, refetch } = useQuery(
     ["getMyReviews"],
     () =>
@@ -21,7 +20,6 @@ const MyPage = () => {
         headers: { Authorization: token },
       })
   );
-  console.log(data);
 
   if (isLoading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -29,6 +27,8 @@ const MyPage = () => {
   if (isError) {
     console.log(error.response.data.error.message);
   }
+
+  const myList = data.data.data;
 
   const reSort = (criteria) => {
     if (criteria !== sortBy) {
@@ -50,7 +50,7 @@ const MyPage = () => {
     return (
       <Container>
         {navArea}
-        {data?.data.map((item) => (
+        {myList?.map((item) => (
           <ReviewCard key={item.id} />
         ))}
       </Container>
@@ -59,7 +59,7 @@ const MyPage = () => {
     return (
       <Container>
         {navArea}
-        {data?.data.map((item) => (
+        {myList?.map((item) => (
           <ReviewCard key={item.id} />
         ))}
       </Container>
