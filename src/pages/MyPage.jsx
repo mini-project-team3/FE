@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import ReviewCard from "../components/ReviewCard";
+import Test from "../components/Test";
 import LoadingSpinner from "../style/LoadingSpinner";
 import SortButton from "../style/SortButton";
 
@@ -17,6 +18,8 @@ const MyPage = () => {
       navigate("/user");
     }
   }, []);
+
+  useEffect(() => {}, []);
 
   const pageSelector = useSelector(
     (state) => state.paginationSlice.currentPage
@@ -113,7 +116,7 @@ const MyPage = () => {
         {myList?.map((item) => (
           <ReviewCard key={item.id} review={item} />
         ))}
-        <Pagination />
+        <Test />
       </div>
     );
   } else if (sortBy === "LIKES") {
