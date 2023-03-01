@@ -1,10 +1,26 @@
 import React, { useState } from "react";
+import '../App.css'
 import axios from "axios";
+import Form from "react-bootstrap/Form";
+import {ReviewCardSt, CategorySt, CheckboxSt, ReviewTitleSt, InputSt} from '../style/ReviewPage.jsx'
+import { BlackBtn } from "../style/signinOrUp/Button";
+
+
 
 const Review = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [category, setCategory] = useState([]);
+
+  const onSubmitHandler = async ()  => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/api/reviews`, {
+      title: { title },
+      contents: { contents },
+      categoryList: { category },
+      // {header}로 토큰값을 같이 넘겨줘야 함
+    })
+    console.log({'title':{title}, 'contents':{contents}, 'categoryList':{category}})
+  }
 
   const categoryList = [
     "인문",
@@ -16,81 +32,76 @@ const Review = () => {
     "어린이",
   ];
 
-  const onSubmitHandler = () => {};
+ 
 
   return (
-    <div>
-      <h4>리뷰작성 페이지</h4>
-      {categoryList.map((item, i) => {
-        return (
-          <div key={i}>
-            {item}
-            <input
-              type="checkbox"
-              value={category}
-              onChange={(e) => {
-                setCategory(e.target.value);
-                // console.log({category})
-              }}
-            />
-          </div>
-        );
-      })}
+    <ReviewCardSt>
+    <Form onSubmit = {(e)=>{e.preventDefault()}}>
+      <ReviewTitleSt>
+        <h2>Write a review</h2>
+      </ReviewTitleSt>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <CheckboxSt>
+          {categoryList.map((item, i) => {
+            return (
+              <CategorySt key={i}>
+                {item}
+                <input
+                  type="checkbox"
+                  value={`C${i}`}
+                  onChange={(e) => {
+                    setCategory([...category, e.target.value]);
+                    // console.log({category})
+                  }}
+                />
+              </CategorySt>
+            );
+          })}
+        </CheckboxSt>
 
-      {/* <form action="api/reviews" method="POST">
-      <div>
-        Category : <input type="checkbox" name="categoryList"
-        value={"C1[]"}/>인문
-        <input type="checkbox" name="categoryList"
-        value={"C2[]"}/>사회
-        <input type="checkbox" name="categoryList"
-        value={"C3[]"}/>과학
-        <input type="checkbox" name="categoryList"
-        value={"C4[]"}/>문학
-        <input type="checkbox" name="categoryList"
-        value={"C5[]"}/>예술
-        <input type="checkbox" name="categoryList"
-        value={"C6[]"}/>가정
-        <input type="checkbox" name="categoryList"
-        value={"C7[]"}/>어린이
-      </div><br/>
-      </form> */}
-
-      <div>
-        <input
+        <InputSt
           type="text"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-          placeholder="책 제목을 입력하세요📚"
+          placeholder="책 제목을 입력하세요"
         />
-        <br />
-        <textarea
-          type="text"
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <InputSt
+          as="textarea"
+          rows={3}
+          placeholder="내용을 입력하세요"
           value={contents}
           onChange={(e) => {
             setContents(e.target.value);
           }}
           cols="30"
-          rows="5"
-          placeholder="여기에 내용을 써주세요~"
-        ></textarea>
-      </div>
+          style={{
+            height: "300px",
+            backgroundImage: `linear-gradient(
+    rgba(48, 48, 48, 0.8),
+    rgba(0, 0, 0, 0.8)
+  ), url('https://i.pinimg.com/originals/0b/5c/c0/0b5cc024841accd9a31a7b2daeb0e57b.gif')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            color: "white",
+          }}
+        />
+      </Form.Group>
 
-      <button
+      <BlackBtn
         onClick={() => {
-          axios.post("api/reviews", {
-            title: { title },
-            contents: { contents },
-            categoryList: { category },
-          });
+          onSubmitHandler();
         }}
       >
         등록하기
-      </button>
-    </div>
-  );
+      </BlackBtn>
+    </Form>
+  </ReviewCardSt>
+);
 };
 
 export default Review;
