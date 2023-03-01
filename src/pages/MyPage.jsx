@@ -25,24 +25,21 @@ const MyPage = () => {
   const currentPage = pageSelector.payload || 1;
 
   const [sortBy, setSortBy] = useState("MyWrite");
-  const criteria = "createdAt";
+  const [handleSort, setHandleSort] = useState("createdAt");
 
-  const handleSortByLike = () => {
-    criteria = "likeCount";
+  const handleSortBy = (target) => {
+    if (handleSort === target) {
+      return;
+    }
+    setHandleSort(target);
     refetch();
   };
-
-  const handleSortByLatest = () => {
-    criteria = "createdAt";
-    refetch();
-  };
-
   const queryFunc = async () => {
     if (sortBy === "MyWrite") {
       return await axios.get(
         `${process.env.REACT_APP_BASEURL}/api/myreviews?page=${
           currentPage - 1
-        }&criteria=${criteria}`,
+        }&criteria=${handleSort}`,
         {
           headers: { authorization: token },
         }
@@ -51,7 +48,7 @@ const MyPage = () => {
       return await axios.get(
         `${process.env.REACT_APP_BASEURL}/api/reviews/likes?page=${
           currentPage - 1
-        }&criteria=${criteria}`,
+        }&criteria=${handleSort}`,
         {
           headers: { authorization: token },
         }
@@ -99,8 +96,12 @@ const MyPage = () => {
         </SortButton>
       </div>
       <div className="d-flex w-100 justify-content-center">
-        <SortButton onClick={handleSortByLike}>Sort by Likes</SortButton>
-        <SortButton onClick={handleSortByLatest}>Sort by Latest</SortButton>
+        <SortButton onClick={() => handleSortBy("likeCount")}>
+          Sort by Likes
+        </SortButton>
+        <SortButton onClick={() => handleSortBy("createdAt")}>
+          Sort by Latest
+        </SortButton>
       </div>
     </div>
   );
