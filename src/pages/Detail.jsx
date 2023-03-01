@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { Card } from "react-bootstrap";
 import { useQuery } from "react-query";
@@ -39,6 +40,10 @@ const Detail = () => {
        </div>
     )
 
+=======
+const Detail = () => {
+  return <h4>상세 페이지</h4>;
+>>>>>>> 6e529022d88ac58a1ba59f9d69ef60e6adba710e
 };
 
 export default Detail;
