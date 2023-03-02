@@ -47,22 +47,29 @@ const User = () => {
       password: data.signupPassword,
       nickname: data.signupNickname,
     };
-    const res = await axios.post(
-      `${process.env.REACT_APP_BASEURL}/api/users/signup`,
-      data
-    );
-    return res.data;
+    await axios
+      .post(`${process.env.REACT_APP_BASEURL}/api/users/signup`)
+      .then((res) => {
+        alert(res.data.success.message);
+        navigate("/");
+      })
+      .catch((err) => {
+        alert(err.response.data.error.message);
+      });
   };
 
   const postLogin = async (data) => {
     data = { loginId: data.loginLoginId, password: data.loginPassword };
-    const res = await axios.post(
-      `${process.env.REACT_APP_BASEURL}/api/users/login`,
-      data
-    );
-
-    window.localStorage.setItem("token", res.headers.authorization);
-    navigate("/");
+    await axios
+      .post(`${process.env.REACT_APP_BASEURL}/api/users/login`, data)
+      .then((res) => {
+        alert(res.data.success.message);
+        window.localStorage.setItem("token", res.headers.authorization);
+        navigate("/");
+      })
+      .catch((err) => {
+        alert(err.response.data.error.message);
+      });
   };
 
   return (
@@ -80,14 +87,12 @@ const User = () => {
               type="text"
               className="input"
               placeholder="아이디"
-              value="user1"
               {...register("loginLoginId")}
             />
             <input
               type="password"
               className="input"
               placeholder="비밀번호"
-              value="Password1!"
               {...register("loginPassword")}
             />
           </div>
