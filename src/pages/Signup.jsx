@@ -193,7 +193,7 @@ const FormStyle = styled.div`
       }
 
       .form-title {
-        color: black
+        color: black;
         font-size: 1.7em;
         text-align: center;
 
@@ -385,7 +385,7 @@ const FormStyle = styled.div`
       }
 
       &.slide-up .form-title span {
-        color:#fff;
+        color: #fff;
         margin-right: 5px;
         opacity: 1;
         visibility: visible;
