@@ -48,7 +48,7 @@ const User = () => {
       nickname: data.signupNickname,
     };
     await axios
-      .post(`${process.env.REACT_APP_BASEURL}/api/users/signup`)
+      .post(`${process.env.REACT_APP_BASEURL}/api/users/signup`, data)
       .then((res) => {
         alert(res.data.success.message);
         navigate("/");
