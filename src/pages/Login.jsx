@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import {Button} from "../style/signinOrUp/Button";
+import { Button } from "../style/signinOrUp/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ const Login = () => {
       password: "123asdASD!@#",
     };
     const res = await axios.post(
-      "http://13.113.67.140:8080/api/users/login",
+      `http://13.113.67.140:8080/api/users/login`,
       data
     );
     console.log("res : ", res);

@@ -18,8 +18,6 @@ const MyPage = () => {
     }
   }, []);
 
-  useEffect(() => {}, []);
-
   const pageSelector = useSelector(
     (state) => state.paginationSlice.currentPage
   );
@@ -69,7 +67,7 @@ const MyPage = () => {
     console.log(error.response.data.error.message);
   }
 
-  const myList = data.data.data;
+  const myList = data.data.data.reviewList;
 
   const reSort = (criteria) => {
     if (criteria === sortBy) {
@@ -90,10 +88,10 @@ const MyPage = () => {
         <SortButton onClick={onLogoutHandler}>로그아웃</SortButton>
       </div>
       <div className="d-flex w-100 justify-content-center">
-        <SortButton onClick={() => reSort("MyWrite")}>
+        <SortButton onClick={() => reSort("LIKES")}>
           내가 쓴 리뷰 조회
         </SortButton>
-        <SortButton onClick={() => reSort("LIKES")}>
+        <SortButton onClick={() => reSort("MyWrite")}>
           내가 좋아요한 리뷰 조회
         </SortButton>
       </div>

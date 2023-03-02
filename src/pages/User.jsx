@@ -63,7 +63,7 @@ const User = () => {
     await axios
       .post(`${process.env.REACT_APP_BASEURL}/api/users/login`, data)
       .then((res) => {
-        alert(res.data.success.message);
+        alert("로그인 되었습니다.");
         window.localStorage.setItem("token", res.headers.authorization);
         navigate("/");
       })

@@ -68,7 +68,7 @@ function Navigation() {
   };
 
   const moveToMyPage = () => {
-    navigate("/user");
+    navigate("/mypage");
   };
   return (
     <Stylednav>
