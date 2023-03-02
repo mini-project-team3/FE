@@ -374,7 +374,7 @@ function Modal(props) {
                 props.onSubmitcontentsHandler();
               }
             }}
-            placeholder="입력 후 엔터를 누르세요"
+            placeholder="입력 후 엔터 3조 Form미쳤다 내마음 Submit 하고싶다"
             style={{
               width: "500px",
               height: "100px",
@@ -405,7 +405,7 @@ function Modal(props) {
                 props.onSubmitEditcontentsHandler();
               }
             }}
-            placeholder="수정할 내용을 입력후 엔터"
+            placeholder="수정할 내용을 입력후 엔터 3조 Form 미쳤다"
             style={{ width: "500px", height: "100px" }}
           />
         </div>
