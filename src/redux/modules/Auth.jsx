@@ -8,6 +8,7 @@ export const tokenSlice = createSlice({
     authenticated: false,
     accessToken: null,
     expireTime: null,
+    nickname: "",
   },
   reducers: {
     SET_TOKEN: (state, action) => {

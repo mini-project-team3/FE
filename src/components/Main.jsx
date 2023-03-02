@@ -46,7 +46,7 @@ function Main() {
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
   const { isLoading, isError, data, error, refetch } = useQuery(
-    ["reviews", curCategory],
+    ["reviews", curCategory, currentPage],
     () => getReviews(currentPage, curCategory)
   );
   const reviewList = data && data.data;
