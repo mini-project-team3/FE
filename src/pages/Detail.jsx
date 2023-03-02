@@ -127,7 +127,12 @@ const Detail = () => {
   const onEditButtonHandler = async (e) => {
     e.preventDefault();
     const now = new Date();
-    const nowDetail = "" + now.getHours() + now.getMinutes() + now.getSeconds() + now.getMilliseconds();
+    const nowDetail =
+      "" +
+      now.getHours() +
+      now.getMinutes() +
+      now.getSeconds() +
+      now.getMilliseconds();
 
     const title = e.target.title.value;
     const desc = e.target.desc.value;
@@ -136,9 +141,13 @@ const Detail = () => {
       contents: desc,
       modifiedAt: nowDetail,
     });
-    const res = await axios.put(`${process.env.REACT_APP_BASEURL}/api/reviews/${id}`, newReview, {
-      headers: { authorization: token }, // 토큰을 헤더에 담아 보냄
-    });
+    const res = await axios.put(
+      `${process.env.REACT_APP_BASEURL}/api/reviews/${id}`,
+      newReview,
+      {
+        headers: { authorization: token }, // 토큰을 헤더에 담아 보냄
+      }
+    );
     console.log(res);
   };
 
@@ -150,9 +159,11 @@ const Detail = () => {
   // 댓글 관련
 
   const onDeleteCommentHandler = (id) => {
-    axios.delete(`${process.env.REACT_APP_BASEURL}/api/comments/${id}`).then(() => {
-      refetch();
-    });
+    axios
+      .delete(`${process.env.REACT_APP_BASEURL}/api/comments/${id}`)
+      .then(() => {
+        refetch();
+      });
   };
 
   const showEditCommentHandler = (item) => {
@@ -190,7 +201,10 @@ const Detail = () => {
 
   return (
     <div className="layout">
-      <button onClick={onLikeHandler} style={{ backgroundColor: "transparent", border: "none" }}>
+      <button
+        onClick={onLikeHandler}
+        style={{ backgroundColor: "transparent", border: "none" }}
+      >
         <MdFavorite style={{ fontSize: "30px" }} /> {List.likeCount}
       </button>
       {reviewEditOn ? (
@@ -237,33 +251,42 @@ const Detail = () => {
             <div>
               <button
                 style={{ backgroundColor: "transparent", border: "none" }}
-                onClick={() => showReviewEditHandler(List?.title, List?.contents)}
+                onClick={() =>
+                  showReviewEditHandler(List?.title, List?.contents)
+                }
               >
                 <SlPencil style={{ fontSize: "30px", color: "white" }} />
               </button>
-              <button style={{ backgroundColor: "transparent", border: "none" }} onClick={reviewDeleteHandler}>
-                <SlTrash style={{ fontSize: "30px", color: "white", backgroundColor: "transparent", border: "none" }} />
+              <button
+                style={{ backgroundColor: "transparent", border: "none" }}
+                onClick={reviewDeleteHandler}
+              >
+                <SlTrash
+                  style={{
+                    fontSize: "30px",
+                    color: "white",
+                    backgroundColor: "transparent",
+                    border: "none",
+                  }}
+                />
               </button>
             </div>
           ) : (
-            <div>
-              <button
-                style={{ backgroundColor: "transparent", border: "none" }}
-                onClick={() => showReviewEditHandler(List?.title, List?.contents)}
-              >
-                <SlPencil style={{ fontSize: "30px", color: "white" }} />
-              </button>
-              <button onClick={reviewDeleteHandler} style={{ backgroundColor: "transparent", border: "none" }}>
-                <SlTrash style={{ fontSize: "30px", color: "white" }} />
-              </button>
-            </div>
+            <div></div>
           )}
         </Card>
       )}
 
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div>
-          <div style={{ fontFamily: "Lobster, cursive", fontSize: "5em", marginTop: "-20px", marginBottom: "-30px" }}>
+          <div
+            style={{
+              fontFamily: "Lobster, cursive",
+              fontSize: "5em",
+              marginTop: "-20px",
+              marginBottom: "-30px",
+            }}
+          >
             -----Commnet----
           </div>
           <button

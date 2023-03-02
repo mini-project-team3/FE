@@ -49,8 +49,8 @@ const User = () => {
     };
     await axios
       .post(`${process.env.REACT_APP_BASEURL}/api/users/signup`, data)
-      .then((res) => {
-        alert(res.data.success.message);
+      .then(() => {
+        alert("로그인 했습니다.");
         navigate("/");
       })
       .catch((err) => {
