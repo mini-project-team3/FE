@@ -46,7 +46,6 @@ function Main() {
   const { isLoading, isError, data, error, refetch } = useQuery(["reviews", curCategory, currentPage], () =>
     getReviews(currentPage, curCategory)
   );
-  const reviewList = data && data.data;
 
   console.log("data : ", data);
 
@@ -57,7 +56,7 @@ function Main() {
   if (isError) {
     return console.log("❌❌❌", error);
   }
-
+  const reviewList = data.data.reviewList;
   const handleSortByLike = () => {
     setLikeSort(true);
     setCreateDateSort(false);
