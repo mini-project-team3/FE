@@ -42,13 +42,6 @@ const Pagination = () => {
             <li className="pagination-item " onClick={newSelect}>
               3
             </li>
-            <li className="pagination-item" onClick={newSelect}>
-              4
-            </li>
-            <li className="pagination-item" onClick={newSelect}>
-              5
-            </li>
-
             <li className="pagination-item" onClick={onClickNextButtonHandler}>
               다음
             </li>
@@ -71,12 +64,6 @@ const Pagination = () => {
             <li className="pagination-item " onClick={newSelect}>
               3
             </li>
-            <li className="pagination-item" onClick={newSelect}>
-              4
-            </li>
-            <li className="pagination-item" onClick={newSelect}>
-              5
-            </li>
 
             <li className="pagination-item" onClick={onClickNextButtonHandler}>
               다음
@@ -92,9 +79,6 @@ const Pagination = () => {
               이전
             </li>
             <li className="pagination-item" onClick={newSelect}>
-              {curPage - 2}
-            </li>
-            <li className="pagination-item" onClick={newSelect}>
               {curPage - 1}
             </li>
             <li className="pagination-item pg-active" onClick={newSelect}>
@@ -102,9 +86,6 @@ const Pagination = () => {
             </li>
             <li className="pagination-item" onClick={newSelect}>
               {curPage + 1}
-            </li>
-            <li className="pagination-item" onClick={newSelect}>
-              {curPage + 2}
             </li>
 
             <li className="pagination-item" onClick={onClickNextButtonHandler}>

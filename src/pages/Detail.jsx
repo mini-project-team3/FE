@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import { Button, DelButton } from "../style/signinOrUp/Button";
 import LoadingSpinner from "../style/LoadingSpinner";
 import { InputSt } from "../style/ReviewPage.jsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Detail = () => {
   let { id } = useParams();
@@ -14,7 +14,13 @@ const Detail = () => {
   const [contents, setContents] = useState("");
   const [commentInputMode, setCommentInputMode] = useState("CREATE");
   const [commentEditId, setCommentEditId] = useState(null);
+
+  const [reviewEditOn, setReviewEditOn] = useState(false); //리뷰 수정창 뜨게하기
+  const [reviewEditTitle, setReviewEditTitle] = useState("");
+  const [reviewEditContents, setReviewEditContents] = useState("");
+
   const [likes, setLikes] = useState(null); // 좋아요 수를 useState관리
+  const navigate = useNavigate();
 
   const token = window.localStorage.getItem("token"); // 로컬 스토리지에서 토큰을 가져오가
 
@@ -61,13 +67,18 @@ const Detail = () => {
   };
 
   const onSubmitcontentsHandler = async () => {
-    axios.post(
-      `${process.env.REACT_APP_BASEURL}/api/reviews/${id}`,
-      {
-        contents: contents,
-      },
-      { headers: { authorization: token } }
-    );
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/api/reviews/${id}`,
+        {
+          contents: contents,
+        },
+        { headers: { authorization: token } }
+      )
+      .then(() => {
+        setModal(false);
+        refetch();
+      });
   };
   const onSubmitEditcontentsHandler = () => {
     axios
@@ -153,15 +164,100 @@ const Detail = () => {
     setCommentInputMode("UPDATE");
     setModal(true);
   };
-  const onEditCommentHandler = (id) => {
-    axios.put(`${process.env.REACT_APP_BASEURL}/api/comments/${id}`);
+
+  const showReviewEditHandler = (title, contents) => {
+    setReviewEditOn(true);
+    setReviewEditTitle(title);
+    setReviewEditContents(contents);
+  };
+  const reviewEditHandler = (e) => {
+    e.preventDefault();
+    axios
+      .put(`${process.env.REACT_APP_BASEURL}/api/reviews/${id}`, {
+        title: reviewEditTitle,
+        contents: reviewEditContents,
+      })
+      .then((res) => {
+        console.log(res);
+        refetch();
+        setReviewEditOn(false);
+      });
+  };
+  const reviewDeleteHandler = () => {
+    axios.delete(`${process.env.REACT_APP_BASEURL}/api/reviews/${id}`);
+    navigate("/");
   };
 
   console.log("List : ", List.nickname);
   return (
     <div className="layout">
       <button onClick={onLikeHandler}>👍 {List.likeCount}</button>
-      <Card
+      {reviewEditOn ? (
+        <div>
+          <form onSubmit={reviewEditHandler}>
+            <input
+              type="text"
+              placeholder="제목"
+              value={reviewEditTitle}
+              onChange={(e) => {
+                setReviewEditTitle(e.target.value);
+              }}
+            />
+            <input
+              type="text"
+              placeholder="내용"
+              value={reviewEditContents}
+              onChange={(e) => {
+                setReviewEditContents(e.target.value);
+              }}
+            />
+            <input type="submit" />
+          </form>
+        </div>
+      ) : (
+        <Card
+          key={List?.id}
+          bg="dark"
+          text="white"
+          style={{
+            width: "30rem",
+            height: "20rem",
+            borderRadius: "20px",
+          }}
+          className="my-2"
+        >
+          <Card.Header>{List?.title}</Card.Header>
+          <Card.Body>
+            <Card.Title>{List?.contents}</Card.Title>
+            <Card.Text>{List?.nickname}</Card.Text>
+            <Card.Text>{List?.createdAt}</Card.Text>
+          </Card.Body>
+          {List.nickname === curUserNickname ? (
+            <div>
+              <Button
+                onClick={() =>
+                  showReviewEditHandler(List?.title, List?.contents)
+                }
+              >
+                수정
+              </Button>
+              <button onClick={reviewDeleteHandler}>삭제</button>
+            </div>
+          ) : (
+            <div>
+              <Button
+                onClick={() =>
+                  showReviewEditHandler(List?.title, List?.contents)
+                }
+              >
+                수정
+              </Button>
+              <button onClick={reviewDeleteHandler}>삭제</button>
+            </div>
+          )}
+        </Card>
+      )}
+      {/* <Card
         key={List?.id}
         bg="dark"
         text="white"
@@ -180,13 +276,16 @@ const Detail = () => {
         </Card.Body>
         {List.nickname === curUserNickname ? (
           <div>
-            <Button>수정</Button>
-            <button>삭제</button>
+            <Button onClick={reviewEditHandler}>수정</Button>
+            <button onClick={reviewDeleteHandler}>삭제</button>
           </div>
         ) : (
-          ""
+          <div>
+            <Button onClick={showReviewEditHandler}>수정</Button>
+            <button onClick={reviewDeleteHandler}>삭제</button>
+          </div>
         )}
-      </Card>
+      </Card> */}
 
       <div>
         댓글창

@@ -51,7 +51,7 @@ function Main() {
   );
   const reviewList = data && data.data;
 
-  console.log(data);
+  console.log("data : ", data);
 
   if (isLoading) {
     return <LoadingSpinner />;

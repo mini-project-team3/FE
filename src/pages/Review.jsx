@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import { ReviewCardSt, CategorySt, CheckboxSt, ReviewTitleSt, InputSt } from "../style/ReviewPage.jsx";
+import {
+  ReviewCardSt,
+  CategorySt,
+  CheckboxSt,
+  ReviewTitleSt,
+  InputSt,
+} from "../style/ReviewPage.jsx";
 import { BlackBtn } from "../style/signinOrUp/Button";
 
 //컴포시작
@@ -17,10 +23,22 @@ const Review = () => {
       categoryList: { category },
       // {header}로 토큰값을 같이 넘겨줘야 함
     });
-    console.log({ title: { title }, contents: { contents }, categoryList: { category } });
+    console.log({
+      title: { title },
+      contents: { contents },
+      categoryList: { category },
+    });
   };
 
-  const categoryList = ["인문", "사회", "과학", "문학", "예술", "가정", "어린이"];
+  const categoryList = [
+    "인문",
+    "사회",
+    "과학",
+    "문학",
+    "예술",
+    "가정",
+    "어린이",
+  ];
 
   return (
     <ReviewCardSt>
