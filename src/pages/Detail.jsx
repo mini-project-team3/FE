@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Card } from "react-bootstrap";
 import { useQuery } from "react-query";
-import { Button, DelButton } from "../style/signinOrUp/Button";
+
 import LoadingSpinner from "../style/LoadingSpinner";
 import { InputSt } from "../style/ReviewPage.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import { MdFavorite } from "react-icons/md";
+import { SlPencil } from "react-icons/sl";
+import { SlTrash } from "react-icons/sl";
 
 const Detail = () => {
   let { id } = useParams();
@@ -67,6 +70,10 @@ const Detail = () => {
   };
 
   const onSubmitcontentsHandler = async () => {
+    if (!contents) {
+      return;
+    }
+
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/api/reviews/${id}`,
@@ -76,10 +83,11 @@ const Detail = () => {
         { headers: { authorization: token } }
       )
       .then(() => {
-        setModal(false);
+        setContents(""); // 인풋비우기
         refetch();
       });
   };
+
   const onSubmitEditcontentsHandler = () => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/api/comments/${commentEditId}`, {
@@ -178,9 +186,12 @@ const Detail = () => {
   };
 
   console.log("List : ", List.nickname);
+
   return (
     <div className="layout">
-      <button onClick={onLikeHandler}>👍 {List.likeCount}</button>
+      <button onClick={onLikeHandler} style={{ backgroundColor: "transparent", border: "none" }}>
+        <MdFavorite style={{ fontSize: "30px" }} /> {List.likeCount}
+      </button>
       {reviewEditOn ? (
         <div>
           <form onSubmit={reviewEditHandler}>
@@ -223,71 +234,125 @@ const Detail = () => {
           </Card.Body>
           {List.nickname === curUserNickname ? (
             <div>
-              <Button onClick={() => showReviewEditHandler(List?.title, List?.contents)}>수정</Button>
-              <button onClick={reviewDeleteHandler}>삭제</button>
+              <button
+                style={{ backgroundColor: "transparent", border: "none" }}
+                onClick={() => showReviewEditHandler(List?.title, List?.contents)}
+              >
+                <SlPencil style={{ fontSize: "30px", color: "white" }} />
+              </button>
+              <button style={{ backgroundColor: "transparent", border: "none" }} onClick={reviewDeleteHandler}>
+                <SlTrash style={{ fontSize: "30px", color: "white", backgroundColor: "transparent", border: "none" }} />
+              </button>
             </div>
           ) : (
             <div>
-              <Button onClick={() => showReviewEditHandler(List?.title, List?.contents)}>수정</Button>
-              <button onClick={reviewDeleteHandler}>삭제</button>
+              <button
+                style={{ backgroundColor: "transparent", border: "none" }}
+                onClick={() => showReviewEditHandler(List?.title, List?.contents)}
+              >
+                <SlPencil style={{ fontSize: "30px", color: "white" }} />
+              </button>
+              <button onClick={reviewDeleteHandler} style={{ backgroundColor: "transparent", border: "none" }}>
+                <SlTrash style={{ fontSize: "30px", color: "white" }} />
+              </button>
             </div>
           )}
         </Card>
       )}
-      {/* <Card
-        key={List?.id}
-        bg="dark"
-        text="white"
-        style={{
-          width: "30rem",
-          height: "20rem",
-          borderRadius: "20px",
-        }}
-        className="my-2"
-      >
-        <Card.Header>{List?.title}</Card.Header>
-        <Card.Body>
-          <Card.Title>{List?.contents}</Card.Title>
-          <Card.Text>{List?.nickname}</Card.Text>
-          <Card.Text>{List?.createdAt}</Card.Text>
-        </Card.Body>
-        {List.nickname === curUserNickname ? (
-          <div>
-            <Button onClick={reviewEditHandler}>수정</Button>
-            <button onClick={reviewDeleteHandler}>삭제</button>
-          </div>
-        ) : (
-          <div>
-            <Button onClick={showReviewEditHandler}>수정</Button>
-            <button onClick={reviewDeleteHandler}>삭제</button>
-          </div>
-        )}
-      </Card> */}
 
-      <div>
-        댓글창
-        {List.commentList?.map((item) => (
-          <div>
-            <span>{item.nickname}</span>
-            <span>{item.contents}</span>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div>
+          <div style={{ fontFamily: "Lobster, cursive", fontSize: "5em", marginTop: "-20px", marginBottom: "-30px" }}>
+            -----Commnet----
+          </div>
+          <button
+            onClick={toggleModalHandler}
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              border: "none",
+              borderRadius: "15px",
+              padding: "10px 20px",
+              margin: "20px 0",
+              width: "500px",
+              maxWidth: "100%",
+            }}
+          >
+            댓글 입력하기
+          </button>
+
+          {modal == true ? (
+            <Modal
+              commentInputMode={commentInputMode}
+              contents={contents}
+              setContents={setContents}
+              onSubmitcontentsHandler={onSubmitcontentsHandler}
+              onSubmitEditcontentsHandler={onSubmitEditcontentsHandler}
+            />
+          ) : null}
+          {List.commentList?.map((item) => (
             <div>
-              <button onClick={() => onDeleteCommentHandler(item.id)}>댓글 삭제</button>
-              <button onClick={() => showEditCommentHandler(item)}>댓글 수정</button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <button onClick={toggleModalHandler}>댓글 입력하기</button>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  borderRadius: "10px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "20px",
+                    marginRight: "20px",
+                    display: "inline-block",
+                    width: "auto",
 
-      {modal == true ? (
-        <Modal
-          commentInputMode={commentInputMode}
-          contents={contents}
-          setContents={setContents}
-          onSubmitcontentsHandler={onSubmitcontentsHandler}
-          onSubmitEditcontentsHandler={onSubmitEditcontentsHandler}
-        />
-      ) : null}
+                    padding: "5px",
+                  }}
+                >
+                  {item.nickname}
+                </span>
+                <span
+                  style={{
+                    fontSize: "20px",
+                    display: "inline-block",
+                    width: "auto",
+
+                    padding: "5px",
+                  }}
+                >
+                  {item.contents}
+                </span>
+              </div>
+              <div style={{ display: "flex" }}>
+                <button
+                  onClick={() => onDeleteCommentHandler(item.id)}
+                  style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <SlTrash style={{ fontSize: "20px" }} />
+                </button>
+                <button
+                  onClick={() => showEditCommentHandler(item)}
+                  style={{
+                    backgroundColor: "black",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <SlPencil style={{ fontSize: "20px" }} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -303,9 +368,25 @@ function Modal(props) {
             onChange={(e) => {
               props.setContents(e.target.value);
             }}
-            placeholder="댓글을 작성해보세요"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                props.onSubmitcontentsHandler();
+              }
+            }}
+            placeholder="입력 후 엔터를 누르세요"
+            style={{
+              width: "500px",
+              height: "100px",
+              backgroundImage: `linear-gradient(
+              rgba(48, 48, 48, 0.8),
+              rgba(0, 0, 0, 0.8)
+              ), url('https://i.pinimg.com/originals/0b/5c/c0/0b5cc024841accd9a31a7b2daeb0e57b.gif')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              color: "white",
+            }}
           />
-          <button onClick={props.onSubmitcontentsHandler}>확인</button>
         </div>
       );
 
