@@ -1,26 +1,46 @@
 import React, { useState } from "react";
+import "../App.css";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import { ReviewCardSt, CategorySt, CheckboxSt, ReviewTitleSt, InputSt } from "../style/ReviewPage.jsx";
+import {
+  ReviewCardSt,
+  CategorySt,
+  CheckboxSt,
+  ReviewTitleSt,
+  InputSt,
+} from "../style/ReviewPage.jsx";
 import { BlackBtn } from "../style/signinOrUp/Button";
 
-//컴포시작
+const token = window.localStorage.getItem("token");
+console.log(token);
+
 const Review = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [category, setCategory] = useState([]);
 
   const onSubmitHandler = async () => {
-    axios.post(`${process.env.REACT_APP_BASEURL}/api/reviews`, {
-      title: { title },
-      contents: { contents },
-      categoryList: { category },
-      // {header}로 토큰값을 같이 넘겨줘야 함
-    });
-    console.log({ title: { title }, contents: { contents }, categoryList: { category } });
+    axios.post(
+      `${process.env.REACT_APP_BASEURL}/api/reviews`,
+      {
+        title: title,
+        contents: contents,
+        categoryList: category,
+      },
+      { headers: { authorization: token } }
+    );
+    console.log({ title: title, contents: contents, categoryList: category });
   };
 
-  const categoryList = ["인문", "사회", "과학", "문학", "예술", "가정", "어린이"];
+  const categoryList = [
+    "인문",
+    "사회",
+    "과학",
+    "문학",
+    "예술",
+    "가정",
+    "어린이",
+  ];
 
   return (
     <ReviewCardSt>
@@ -40,7 +60,7 @@ const Review = () => {
                   {item}
                   <input
                     type="checkbox"
-                    value={`C${i}`}
+                    value={`C${i + 1}`}
                     onChange={(e) => {
                       setCategory([...category, e.target.value]);
                       // console.log({category})
@@ -73,9 +93,9 @@ const Review = () => {
             style={{
               height: "300px",
               backgroundImage: `linear-gradient(
-    rgba(48, 48, 48, 0.8),
-    rgba(0, 0, 0, 0.8)
-  ), url('https://i.pinimg.com/originals/0b/5c/c0/0b5cc024841accd9a31a7b2daeb0e57b.gif')`,
+rgba(48, 48, 48, 0.8),
+rgba(0, 0, 0, 0.8)
+), url('https://i.pinimg.com/originals/0b/5c/c0/0b5cc024841accd9a31a7b2daeb0e57b.gif')`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",

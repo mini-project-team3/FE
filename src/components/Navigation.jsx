@@ -4,8 +4,10 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { SlPencil } from "react-icons/sl";
 import { SlUser } from "react-icons/sl";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { categorySelect } from "../redux/modules/CategorySelect";
 
 //스타일 컴포넌트
 const StyledNavDropdown = styled(NavDropdown)`
@@ -39,6 +41,7 @@ const Stylednav = styled(Navbar)`
 
 //컴포함수시작
 function Navigation() {
+  const dispatch = useDispatch();
   const dropdownItems = [
     { href: "#cartegori/1", label: "인문" },
     { href: "#cartegori/2", label: "사회" },
@@ -49,8 +52,12 @@ function Navigation() {
     { href: "#cartegori/7", label: "어린이" },
   ];
 
-  const dropdownMenu = dropdownItems.map((item) => (
-    <NavDropdown.Item key={item.href} href={item.href}>
+  const onSelectCategoryHandler = (num) => {
+    dispatch(categorySelect(num));
+  };
+
+  const dropdownMenu = dropdownItems.map((item, i) => (
+    <NavDropdown.Item onClick={() => onSelectCategoryHandler(i + 1)}>
       {item.label}
     </NavDropdown.Item>
   ));
@@ -61,7 +68,7 @@ function Navigation() {
   };
 
   const moveToMyPage = () => {
-    navigate("/mypage");
+    navigate("/user");
   };
   return (
     <Stylednav>

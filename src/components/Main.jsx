@@ -29,6 +29,11 @@ const SortButton = styled.button`
 function Main() {
   const navigate = useNavigate();
 
+  //카테고리 관련
+  const category = useSelector((state) => state.CategorySelect.category);
+  const curCategory = category.payload || 0;
+  console.log(curCategory);
+
   //페이지네이션 관련
   const pageSelector = useSelector(
     (state) => state.paginationSlice.currentPage
@@ -40,13 +45,13 @@ function Main() {
   const [likeSort, setLikeSort] = useState(false);
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error } = useQuery(
-    ["reviews", { pageNum: 1, criteria: "likeCount" }],
-    getReviews
+  const { isLoading, isError, data, error, refetch } = useQuery(
+    ["reviews", curCategory, currentPage],
+    () => getReviews(currentPage, curCategory)
   );
   const reviewList = data && data.data;
 
-  console.log(data);
+  console.log("data : ", data);
 
   if (isLoading) {
     return <LoadingSpinner />;

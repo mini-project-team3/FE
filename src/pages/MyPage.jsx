@@ -18,6 +18,8 @@ const MyPage = () => {
     }
   }, []);
 
+  useEffect(() => {}, []);
+
   const pageSelector = useSelector(
     (state) => state.paginationSlice.currentPage
   );
