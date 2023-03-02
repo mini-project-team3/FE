@@ -35,16 +35,19 @@ function Main() {
   console.log(curCategory);
 
   //페이지네이션 관련
-  const pageSelector = useSelector((state) => state.paginationSlice.currentPage);
+  const pageSelector = useSelector(
+    (state) => state.paginationSlice.currentPage
+  );
   // 현재 페이지
-  const currentPage = pageSelector.payload || 1;
+  const currentPage = pageSelector.payload || 0;
 
   const [createDateSort, setCreateDateSort] = useState(false);
   const [likeSort, setLikeSort] = useState(false);
 
   // useQuery hooks의 쿼리 파라미터를 동적으로 변경하기 위해, 쿼리 객체에 변수를 넣어줍니다.
-  const { isLoading, isError, data, error, refetch } = useQuery(["reviews", curCategory, currentPage], () =>
-    getReviews(currentPage, curCategory)
+  const { isLoading, isError, data, error, refetch } = useQuery(
+    ["reviews", curCategory, currentPage],
+    () => getReviews(currentPage, curCategory)
   );
 
   console.log("data : ", data);
@@ -88,7 +91,11 @@ function Main() {
 
       <br />
       {sortedList.map((review) => (
-        <ReviewCard key={review.id} review={review} onClick={() => goToDetailPage(navigate, review.id)} />
+        <ReviewCard
+          key={review.id}
+          review={review}
+          onClick={() => goToDetailPage(navigate, review.id)}
+        />
       ))}
       <Pagination />
     </div>
