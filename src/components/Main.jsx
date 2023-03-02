@@ -8,6 +8,7 @@ import ReviewCard from "./ReviewCard";
 import { goToDetailPage } from "../utils/goToDetailPage";
 import Pagination from "./Pagination";
 import { useSelector } from "react-redux";
+import { getReviews } from "../api/reivewCards";
 
 const SortButton = styled.button`
   background-color: black;
