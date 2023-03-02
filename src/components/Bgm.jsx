@@ -41,9 +41,13 @@ const Bgm = () => {
           src={songs[currentSongIndex].src}
           autoPlay
           style={{ height: "20px", width: "290px", marginBottom: "20px" }}
-        />
+          controlsList="nodownload"
+        >
+          <track kind="captions" />
+        </audio>
       </div>
     </div>
   );
 };
+
 export default Bgm;

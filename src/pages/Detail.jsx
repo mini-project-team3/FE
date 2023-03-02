@@ -264,7 +264,7 @@ const Detail = () => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div>
           <div style={{ fontFamily: "Lobster, cursive", fontSize: "5em", marginTop: "-20px", marginBottom: "-30px" }}>
-            -----Commnet----
+            ----Commnet----
           </div>
           <button
             onClick={toggleModalHandler}
