@@ -94,6 +94,7 @@ const Detail = () => {
         contents: contents,
       })
       .then(() => {
+        setContents(""); // 인풋비우기
         refetch();
       });
   };
@@ -399,9 +400,14 @@ function Modal(props) {
             onChange={(e) => {
               props.setContents(e.target.value);
             }}
-            placeholder="댓글을 수정해보세요"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                props.onSubmitEditcontentsHandler();
+              }
+            }}
+            placeholder="수정할 내용을 입력후 엔터"
+            style={{ width: "500px", height: "100px" }}
           />
-          <button onClick={props.onSubmitEditcontentsHandler}>확인</button>
         </div>
       );
     default:
