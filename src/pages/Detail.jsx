@@ -196,22 +196,32 @@ const Detail = () => {
       {reviewEditOn ? (
         <div>
           <form onSubmit={reviewEditHandler}>
-            <input
+            <InputSt
               type="text"
-              placeholder="제목"
               value={reviewEditTitle}
               onChange={(e) => {
                 setReviewEditTitle(e.target.value);
               }}
-            />
-            <input
-              type="text"
-              placeholder="내용"
-              value={reviewEditContents}
-              onChange={(e) => {
-                setReviewEditContents(e.target.value);
+              placeholder="제목"
+              style={{
+                width: "500px",
+                height: "50px",
+                marginBottom: "10px",
               }}
             />
+            <InputSt
+              type="text"
+              value={reviewEditTitle}
+              onChange={(e) => {
+                setReviewEditTitle(e.target.value);
+              }}
+              placeholder="내용"
+              style={{
+                width: "500px",
+                height: "100px",
+              }}
+            />
+
             <input type="submit" />
           </form>
         </div>
@@ -374,7 +384,7 @@ function Modal(props) {
                 props.onSubmitcontentsHandler();
               }
             }}
-            placeholder="입력 후 엔터 3조 Form미쳤다 내마음 Submit 하고싶다"
+            placeholder="입력 후 엔터를 누르세요"
             style={{
               width: "500px",
               height: "100px",
@@ -405,7 +415,7 @@ function Modal(props) {
                 props.onSubmitEditcontentsHandler();
               }
             }}
-            placeholder="수정할 내용을 입력후 엔터 3조 Form 미쳤다"
+            placeholder="수정할 내용을 입력후 엔터 3조 form미쳤다 내마음 submit하고싶다"
             style={{ width: "500px", height: "100px" }}
           />
         </div>
