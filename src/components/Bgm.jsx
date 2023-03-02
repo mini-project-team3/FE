@@ -2,9 +2,15 @@ import { useState, useEffect } from "react";
 
 const Bgm = () => {
   const songs = [
-    { src: "/Bgm3.mp3", name: "Song 3" },
-    { src: "/Bgm2.mp3", name: "Song 2" },
-    { src: "/Bgm.mp3", name: "Song 1" },
+    { src: "https://raw.githubusercontent.com/leejuae1020/introduction/master/Bgm.mp3", name: "Song 3" },
+    {
+      src: "https://raw.githubusercontent.com/leejuae1020/introduction/master/Charlie%20Puth-01-That's%20Hilarious.mp3",
+      name: "Song 2",
+    },
+    {
+      src: "https://raw.githubusercontent.com/leejuae1020/introduction/master/Charlie%20Puth-02-Dangerously.mp3",
+      name: "Song 1",
+    },
   ];
 
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
